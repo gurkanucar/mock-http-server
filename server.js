@@ -43,7 +43,12 @@ app.get("/routes", express.json(), async (req, res) => {
 
 app.post("/routes", express.json(), async (req, res) => {
   const newRoute = req.body;
-  const id = await addRoute(newRoute);
+
+  const removeProp = "responseData";
+
+  const { [removeProp]: responseData, ...rest } = newRoute;
+
+  const id = await addRoute(rest);
   await addResponse({
     response: newRoute.responseData,
     routeId: id,

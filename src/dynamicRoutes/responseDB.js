@@ -8,9 +8,9 @@ const loadResponses = async () => {
       fs.writeFileSync("responses.json", "[]");
       console.log("responses.json file created.");
     }
-
     const responsesData = await fs.promises.readFile("responses.json", "utf8");
     const parsedResponses = JSON.parse(responsesData);
+    responses = parsedResponses;
     return parsedResponses;
   } catch (err) {
     console.error("Error reading responses file:", err);
@@ -33,7 +33,6 @@ const saveResponses = () => {
 };
 
 const addResponse = async (newResponse) => {
-  console.log(newResponse);
   const lastResponse = responses[responses.length - 1];
   const newId = lastResponse ? lastResponse.id + 1 : 1;
   newResponse = {
@@ -41,7 +40,8 @@ const addResponse = async (newResponse) => {
     id: newId,
   };
   responses.push(newResponse);
-  saveResponses();
+  await saveResponses();
+  return newId;
 };
 
 const deleteResponse = (responseId) => {
