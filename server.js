@@ -2,16 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const rabbitMQ = require("./src/rabbit/rabbitMQ");
-const {
-  HttpMethod,
-  ResponseType,
-  ApiType,
-  handleResponseType,
-  shouldThrowError,
-} = require("./src/helper/responseHelper");
 
-const fs = require("fs");
-const xml2js = require("xml2js");
+const { setupRoutes } = require("./src/dynamicRoutes/routeGenerator");
 
 const port = 3000;
 
@@ -29,124 +21,10 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-require("./src/rest/api/restMock")(app);
-require("./src/soap/api/soapMock")(app);
+// require("./src/rest/api/restMock")(app);
+// require("./src/soap/api/soapMock")(app);
 
-const routes = [
-  {
-    id: 1,
-    routeName: "user",
-    httpMethod: HttpMethod.GET,
-    routePath: "/api/user",
-    responseType: ResponseType.RANDOM_ERROR,
-    apiType: ApiType.REST,
-    returnValue: "user.json",
-  },
-
-  {
-    id: 2,
-    routeName: "userById",
-    httpMethod: HttpMethod.GET,
-    routePath: "/api/user/:id",
-    responseType: ResponseType.RANDOM_ERROR,
-    apiType: ApiType.REST,
-    returnValue: "userById.json",
-  },
-
-  {
-    id: 3,
-    routeName: "userCreate",
-    httpMethod: HttpMethod.POST,
-    routePath: "/api/user",
-    responseType: ResponseType.RANDOM_ERROR,
-    apiType: ApiType.REST,
-    returnValue: "userCreate.json",
-  },
-
-  {
-    id: 4,
-    routeName: "userList",
-    httpMethod: HttpMethod.GET,
-    routePath: "/api/users",
-    responseType: ResponseType.RANDOM_ERROR,
-    apiType: ApiType.REST,
-    returnValue: "userList.json",
-  },
-];
-
-function handleRestRequest(req, res, responseType, returnValue) {
-  fs.readFile("./src/data/" + returnValue, "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("file error");
-    } else {
-      try {
-        const jsonData = JSON.parse(data);
-
-        if (shouldThrowError(responseType)) {
-          res.status(jsonData.errorStatus).json(jsonData.error);
-        } else {
-          res.status(jsonData.successStatus).json(jsonData.data);
-        }
-      } catch (parseErr) {
-        console.error(parseErr);
-        res.status(500).send("json parse error");
-      }
-    }
-  });
-}
-
-routes.forEach((route) => {
-  const {
-    id,
-    routeName,
-    httpMethod,
-    routePath,
-    responseType,
-    apiType,
-    returnValue,
-  } = route;
-  console.log(route.routePath);
-  switch (httpMethod) {
-    case HttpMethod.GET:
-      app.get(routePath, (req, res) => {
-        if (apiType === ApiType.REST) {
-          console.log(routePath);
-          handleRestRequest(req, res, responseType, returnValue);
-        }
-      });
-      break;
-    case HttpMethod.POST:
-      app.post(routePath, (req, res) => {
-        if (apiType === ApiType.REST) {
-          handleRestRequest(req, res, responseType, returnValue);
-        }
-      });
-      break;
-    case HttpMethod.PUT:
-      app.put(routePath, (req, res) => {
-        if (apiType === ApiType.REST) {
-          handleRestRequest(req, res, responseType, returnValue);
-        }
-      });
-      break;
-    case HttpMethod.PATCH:
-      app.patch(routePath, (req, res) => {
-        if (apiType === ApiType.REST) {
-          handleRestRequest(req, res, responseType, returnValue);
-        }
-      });
-      break;
-
-    case HttpMethod.DELETE:
-      app.delete(routePath, (req, res) => {
-        if (apiType === ApiType.REST) {
-          handleRestRequest(req, res, responseType, returnValue);
-        }
-      });
-      break;
-  }
-});
+setupRoutes(app);
 
 // ****** RabbitMQ ********** //
 

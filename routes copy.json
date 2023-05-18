@@ -1,0 +1,85 @@
+[
+  {
+    "id": 1,
+    "routeName": "user",
+    "httpMethod": "ttpMethod.GET",
+    "routePath": "/api/user",
+    "responseType": "ResponseType.RANDOM_ERROR",
+    "apiType": "ApiType.REST",
+    "returnValue": "user.json"
+  },
+
+  {
+    "id": 2,
+    "routeName": "userById",
+    "httpMethod": "HttpMethod.GET",
+    "routePath": "/api/user/:id",
+    "responseType": "ResponseType.RANDOM_ERROR",
+    "apiType": "ApiType.REST",
+    "returnValue": "userById.json"
+  },
+
+  {
+    "id": 3,
+    "routeName": "userCreate",
+    "httpMethod": "HttpMethod.POST",
+    "routePath": "/api/user",
+    "responseType": "ResponseType.RANDOM_ERROR",
+    "apiType": "ApiType.REST",
+    "returnValue": "userCreate.json"
+  },
+
+  {
+    "id": 4,
+    "routeName": "userList",
+    "httpMethod": "HttpMethod.GET",
+    "routePath": "/api/users",
+    "responseType": "ResponseType.RANDOM_ERROR",
+    "apiType": "ApiType.REST",
+    "returnValue": "userList.json"
+  }
+]
+
+
+
+[
+  {
+    "id": 1,
+    "routeName": "user",
+    "httpMethod": "GET",
+    "routePath": "/api/user",
+    "responseType": "RANDOM_ERROR",
+    "apiType": "REST",
+    "returnValue": "user.json"
+  },
+
+  {
+    "id": 2,
+    "routeName": "userById",
+    "httpMethod": "GET",
+    "routePath": "/api/user/:id",
+    "responseType": "RANDOM_ERROR",
+    "apiType": "REST",
+    "returnValue": "userById.json"
+  },
+
+  {
+    "id": 3,
+    "routeName": "userCreate",
+    "httpMethod": "POST",
+    "routePath": "/api/user",
+    "responseType": "RANDOM_ERROR",
+    "apiType": "REST",
+    "returnValue": "userCreate.json"
+  },
+
+  {
+    "id": 4,
+    "routeName": "userList",
+    "httpMethod": "GET",
+    "routePath": "/api/users",
+    "responseType": "RANDOM_ERROR",
+    "apiType": "REST",
+    "returnValue": "userList.json"
+  }
+]
