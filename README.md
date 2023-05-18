@@ -20,6 +20,43 @@
     docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.11-management
 ```
 
+### Response input format for REST:
+
+- This response will show when you send a request. All REST responses must created by this format :
+
+| Parameter       | Type     | Description                             |
+| :-------------- | :------- | :-------------------------------------- |
+| `data`          | `string` | **Required**. your data can be obj/list |
+| `error`         | `string` | **Required**. your error response       |
+| `successStatus` | `string` | **Required**.                           |
+| `errorStatus`   | `string` | **Required**.                           |
+
+```
+{
+  "data": [
+    {
+      "id": 1,
+      "username": "grkn"
+    },
+    {
+      "id": 2,
+      "username": "ali"
+    },
+    {
+      "id": 3,
+      "username": "veli"
+    }
+  ],
+  "error": {
+    "code": "400",
+    "message": "something went wrong"
+  },
+  "successStatus": 201,
+  "errorStatus": 400
+}
+
+```
+
 ### Usage:
 
 - Create a route in related file (restMock/soapMock):
