@@ -2,6 +2,14 @@
 
 ## Simple node.js express server for testing purposes
 
+
+### How to run
+
+```
+npm i
+node server.js
+```
+
 ### Usage:
 
 - Create a route in related file (restMock/soapMock):
