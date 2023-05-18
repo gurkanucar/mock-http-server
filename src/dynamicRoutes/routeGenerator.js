@@ -60,21 +60,21 @@ const setupRoutes = async (app) => {
         });
         break;
       case HttpMethod.PUT:
-        app.post(routePath, (req, res) => {
+        app.put(routePath, (req, res) => {
           if (apiType === ApiType.REST) {
             return handleRestRequest(id, req, res, responseType, returnValue);
           }
         });
         break;
       case HttpMethod.PATCH:
-        app.post(routePath, (req, res) => {
+        app.patch(routePath, (req, res) => {
           if (apiType === ApiType.REST) {
             return handleRestRequest(id, req, res, responseType, returnValue);
           }
         });
         break;
       case HttpMethod.DELETE:
-        app.post(routePath, (req, res) => {
+        app.delete(routePath, (req, res) => {
           if (apiType === ApiType.REST) {
             return handleRestRequest(id, req, res, responseType, returnValue);
           }
