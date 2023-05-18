@@ -151,6 +151,16 @@ $(document).ready(function () {
       successStatusInput,
       errorStatusInput
     );
+
+    $("#response").val(
+      JSON.stringify({
+        data: successResponseInput,
+        error: errorResponseInput,
+        successStatus: successStatusInput,
+        errorStatus: errorStatusInput,
+      })
+    );
+
     $("#dialog").dialog("close");
   });
 });
