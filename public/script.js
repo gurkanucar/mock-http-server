@@ -113,7 +113,7 @@ $(document).ready(function () {
     const httpMethodOptions = ["GET", "POST", "PUT", "PATCH", "DELETE"];
     populateSelectOptions(httpMethodSelect, httpMethodOptions);
 
-    const responseTypeOptions = ["RETURN_ERROR", "RANDOM_ERROR", "SUCCESS"];
+    const responseTypeOptions = ["RANDOM_ERROR", "RETURN_ERROR", "SUCCESS"];
     populateSelectOptions(responseTypeSelect, responseTypeOptions);
 
     const apiTypeOptions = ["REST", "SOAP"];

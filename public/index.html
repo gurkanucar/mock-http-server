@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Routes Operations</title>
+    <title>Mock API</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
     <link
@@ -12,8 +12,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
   <body>
-    <h1>Routes Operations</h1>
-
     <div id="dialog" title="Set Response" style="display: none">
       <fieldset>
         <label for="successResponseInput">Data</label>
@@ -38,21 +36,47 @@
     </div>
 
     <form id="addRouteForm">
-      <h2>Add Route</h2>
-      <label for="routeName">Route Name:</label>
-      <input type="text" id="routeName" name="routeName" required />
-      <label for="httpMethod">HTTP Method:</label>
-      <select id="httpMethod" name="httpMethod" required></select>
-      <label for="routePath">Route Path:</label>
-      <input type="text" id="routePath" name="routePath" required />
-      <label for="responseType">Response Type:</label>
-      <select id="responseType" name="responseType" required></select>
-      <label for="apiType">API Type:</label>
-      <select id="apiType" name="apiType" required></select>
-      <label for="response">Response:</label>
-      <input type="text" id="response" name="response" required />
-      <button type="submit">Add Route</button>
-      <button id="responseHelper" type="button">Generate</button>
+      <div class="container">
+        <div class="container">
+          <div class="row">
+            <div class="inputItems">
+              <label for="routeName">Route Name:</label>
+              <input type="text" id="routeName" name="routeName" required />
+            </div>
+            <div class="inputItems">
+              <label for="httpMethod">HTTP Method:</label>
+              <select id="httpMethod" name="httpMethod" required></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="inputItems">
+              <label for="routePath">Route Path:</label>
+              <input type="text" id="routePath" name="routePath" required />
+            </div>
+            <div class="inputItems">
+              <label for="responseType">Response Type:</label>
+              <select id="responseType" name="responseType" required></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="inputItems">
+              <label for="apiType">API Type:</label>
+              <select id="apiType" name="apiType" required></select>
+            </div>
+            <div class="inputItems">
+              <label for="response">Response:</label>
+              <input type="text" id="response" name="response" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <button type="submit">Add Route</button>
+          <button id="responseHelper" type="button">Response Creator</button>
+        </div>
+      </div>
     </form>
 
     <table id="routesTable">
