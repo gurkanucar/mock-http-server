@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": 1,
+    "username": "grkn"
+  },
+  "error": {
+    "message": "my custom error"
+  },
+  "successStatus": 200,
+  "errorStatus": 400
+}
