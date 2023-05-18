@@ -1,4 +1,9 @@
 const fs = require("fs");
+
+require("dotenv").config();
+
+const APP_PREFIX = process.env.APP_PREFIX;
+
 const {
   ApiType,
   ResponseType,
@@ -49,6 +54,7 @@ const addRoute = async (newRoute) => {
   const newId = lastRoute ? lastRoute.id + 1 : 1;
   newRoute = {
     ...newRoute,
+    routePath: APP_PREFIX + newRoute.routePath,
     id: newId,
   };
   routes.push(newRoute);

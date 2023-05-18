@@ -1,3 +1,7 @@
+require("dotenv").config();
+
+const APP_PREFIX = process.env.APP_PREFIX;
+
 const {
   HttpMethod,
   ApiType,
@@ -29,7 +33,7 @@ const handleRestRequest = async (id, req, res, responseType, returnValue) => {
 
 const setupRoutes = async (app) => {
   app._router.stack = app._router.stack.filter((layer) => {
-    return !layer.route || !layer.route.path.startsWith("/api");
+    return !layer.route || !layer.route.path.startsWith(APP_PREFIX);
   });
 
   loadResponses();
