@@ -19,3 +19,4 @@ app.get("/", (req, res) => {
 });
 
 require("./src/rest/api/restMock")(app);
+require("./src/soap/api/soapMock")(app);
