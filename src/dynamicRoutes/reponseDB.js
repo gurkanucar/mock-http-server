@@ -32,7 +32,7 @@ const saveResponses = () => {
   });
 };
 
-const addResponse = (newResponse) => {
+const addResponse = async (newResponse) => {
   console.log(newResponse);
   const lastResponse = responses[responses.length - 1];
   const newId = lastResponse ? lastResponse.id + 1 : 1;

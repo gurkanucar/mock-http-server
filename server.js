@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const rabbitMQ = require("./src/rabbit/rabbitMQ");
 
 const { setupRoutes } = require("./src/dynamicRoutes/routeGenerator");
 const {
@@ -11,7 +10,13 @@ const {
   updateRoute,
   addRoute,
 } = require("./src/dynamicRoutes/routeDB");
-const { addResponse, loadResponses } = require("./src/dynamicRoutes/reponseDB");
+const {
+  addResponse,
+  loadResponses,
+  deleteResponse,
+  updateResponse,
+  getByRouteId,
+} = require("./src/dynamicRoutes/responseDB");
 
 const port = 3000;
 
@@ -22,12 +27,8 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 app.listen(port, () => {
-  console.log(`server started at port ${port}`);
+  console.log(`Server started at port ${port}`);
 });
-
-// app.get("/", (req, res) => {
-//   res.send("Hello World!");
-// });
 
 app.use(express.static(__dirname + "/public"));
 
@@ -36,40 +37,31 @@ app.get("/", (req, res) => {
 });
 
 app.get("/routes", express.json(), async (req, res) => {
-  setupRoutes(app);
   const routes = await loadRoutes();
   res.json(routes);
 });
+
 app.post("/routes", express.json(), async (req, res) => {
   const newRoute = req.body;
-  console.log(newRoute);
   const id = await addRoute(newRoute);
-  addResponse({
+  await addResponse({
     response: newRoute.responseData,
     routeId: id,
   });
-  setupRoutes(app);
+  await setupRoutes(app);
   res.sendStatus(200);
 });
 
-app.delete("/routes/:id", express.json(), (req, res) => {
+app.delete("/routes/:id", express.json(), async (req, res) => {
   const routeId = parseInt(req.params.id);
-  deleteRoute(routeId);
-  setupRoutes(app);
-  res.sendStatus(200);
-});
-
-app.put("/routes/:id", express.json(), (req, res) => {
-  const routeId = parseInt(req.params.id);
-  const updatedRoute = req.body;
-  updatedRoute.id = routeId;
-  updateRoute(updatedRoute);
-  setupRoutes(app);
+  await deleteRoute(routeId);
+  await setupRoutes(app);
   res.sendStatus(200);
 });
 
 setupRoutes(app);
-loadResponses();
+
+
 // setupRoutes(app);
 
 // loadRoutes();

@@ -56,15 +56,15 @@ const addRoute = async (newRoute) => {
   return newId;
 };
 
-const deleteRoute = (routeId) => {
+const deleteRoute = async (routeId) => {
   const index = routes.findIndex((route) => route.id === routeId);
   if (index !== -1) {
     routes.splice(index, 1);
-    saveRoutes();
+    await saveRoutes();
   }
 };
 
-const updateRoute = (updatedRoute) => {
+const updateRoute = async (updatedRoute) => {
   const index = routes.findIndex((route) => route.id === updatedRoute.id);
   if (index !== -1) {
     routes[index] = updatedRoute;
