@@ -2,12 +2,11 @@
 
 ## Simple node.js express server for testing purposes
 
-
 ### How to run
 
 ```
-npm i
-node server.js
+    npm i
+    node server.js
 ```
 
 ### Usage:
@@ -17,8 +16,15 @@ node server.js
 ```
     // rest route example
     app.get("/user", express.json(), (req, res) => {
-    getUsers(req, res, ResponseType.RANDOM_ERROR);
+        getUsers(req, res, ResponseType.RANDOM_ERROR);
     });
+
+    // soap route example
+    app.get("/user", (req, res) => {
+        res.set("Content-Type", "application/soap+xml"); // *important
+        getUsers(req, res);
+    });
+
 ```
 
 #### Show Errors:
@@ -34,4 +40,48 @@ node server.js
 
     getUserById(req, res);
     getUserById(req, res, ResponseType.RANDOM_ERROR);
+```
+
+## Example Responses:
+
+- **REST**
+
+```
+[
+    {
+        "id": 1,
+        "username": "grkn"
+    },
+    {
+        "id": 2,
+        "username": "ali"
+    },
+    {
+        "id": 3,
+        "username": "veli"
+    }
+]
+```
+
+- **SOAP**
+
+```
+<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>
+    <soap:Body>
+        <users>
+            <user>
+                <id>1</id>
+                <name>grkn</name>
+            </user>
+            <user>
+                <id>2</id>
+                <name>ali</name>
+            </user>
+            <user>
+                <id>3</id>
+                <name>veli</name>
+            </user>
+        </users>
+    </soap:Body>
+</soap:Envelope>
 ```
