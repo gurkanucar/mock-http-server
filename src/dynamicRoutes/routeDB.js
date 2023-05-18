@@ -35,7 +35,7 @@ const loadRoutes = async () => {
   }
 };
 
-const saveRoutes = () => {
+const saveRoutes = async () => {
   fs.writeFile("routes.json", JSON.stringify(routes), "utf8", (err) => {
     if (err) {
       console.error("Error saving routes file:", err);
@@ -43,7 +43,7 @@ const saveRoutes = () => {
   });
 };
 
-const addRoute = (newRoute) => {
+const addRoute = async (newRoute) => {
   console.log(newRoute);
   const lastRoute = routes[routes.length - 1];
   const newId = lastRoute ? lastRoute.id + 1 : 1;
@@ -52,7 +52,8 @@ const addRoute = (newRoute) => {
     id: newId,
   };
   routes.push(newRoute);
-  saveRoutes();
+  await saveRoutes();
+  return newId;
 };
 
 const deleteRoute = (routeId) => {

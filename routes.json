@@ -5,37 +5,38 @@
     "httpMethod": "GET",
     "routePath": "/api/user",
     "responseType": "RANDOM_ERROR",
-    "apiType": "REST",
-    "returnValue": "user.json"
+    "apiType": "REST"
   },
-
   {
     "id": 2,
     "routeName": "userById",
     "httpMethod": "GET",
     "routePath": "/api/user/:id",
     "responseType": "RANDOM_ERROR",
-    "apiType": "REST",
-    "returnValue": "userById.json"
+    "apiType": "REST"
   },
-
   {
     "id": 3,
     "routeName": "userCreate",
     "httpMethod": "POST",
     "routePath": "/api/user",
     "responseType": "RANDOM_ERROR",
-    "apiType": "REST",
-    "returnValue": "userCreate.json"
+    "apiType": "REST"
   },
-
   {
     "id": 4,
     "routeName": "userList",
     "httpMethod": "GET",
     "routePath": "/api/users",
     "responseType": "RANDOM_ERROR",
+    "apiType": "REST"
+  },
+  {
+    "routeName": "userCreate",
+    "httpMethod": "GET",
+    "routePath": "/sa",
+    "responseType": "RANDOM_ERROR",
     "apiType": "REST",
-    "returnValue": "userList.json"
+    "id": 5
   }
 ]

@@ -7,27 +7,24 @@ const {
   shouldThrowError,
 } = require("../helper/responseHelper");
 const fs = require("fs");
+const { getByRouteId } = require("./reponseDB");
 
-const handleRestRequest = (req, res, responseType, returnValue) => {
-  fs.readFile("./src/data/" + returnValue, "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("file error");
+const handleRestRequest = async (id, req, res, responseType, returnValue) => {
+  try {
+    const item = await getByRouteId(id);
+
+    console.log("My response:", item);
+    const jsonData = JSON.parse(item.response);
+
+    if (shouldThrowError(responseType)) {
+      res.status(jsonData.errorStatus).json(jsonData.error);
     } else {
-      try {
-        const jsonData = JSON.parse(data);
-
-        if (shouldThrowError(responseType)) {
-          res.status(jsonData.errorStatus).json(jsonData.error);
-        } else {
-          res.status(jsonData.successStatus).json(jsonData.data);
-        }
-      } catch (parseErr) {
-        console.error(parseErr);
-        res.status(500).send("json parse error");
-      }
+      res.status(jsonData.successStatus).json(jsonData.data);
     }
-  });
+  } catch (parseErr) {
+    console.error(parseErr);
+    res.status(500).send("json parse error");
+  }
 };
 
 const setupRoutes = async (app) => {
@@ -49,7 +46,7 @@ const setupRoutes = async (app) => {
           app.get(routePath, (req, res) => {
             if (apiType === ApiType.REST) {
               console.log(routePath);
-              handleRestRequest(req, res, responseType, returnValue);
+              handleRestRequest(id, req, res, responseType, returnValue);
             }
           });
           break;

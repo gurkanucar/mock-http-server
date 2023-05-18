@@ -11,6 +11,7 @@ const {
   updateRoute,
   addRoute,
 } = require("./src/dynamicRoutes/routeDB");
+const { addResponse, loadResponses } = require("./src/dynamicRoutes/reponseDB");
 
 const port = 3000;
 
@@ -41,7 +42,12 @@ app.get("/routes", express.json(), async (req, res) => {
 });
 app.post("/routes", express.json(), async (req, res) => {
   const newRoute = req.body;
-  addRoute(newRoute);
+  console.log(newRoute);
+  const id = await addRoute(newRoute);
+  addResponse({
+    response: newRoute.responseData,
+    routeId: id,
+  });
   setupRoutes(app);
   res.sendStatus(200);
 });
@@ -63,7 +69,7 @@ app.put("/routes/:id", express.json(), (req, res) => {
 });
 
 setupRoutes(app);
-
+loadResponses();
 // setupRoutes(app);
 
 // loadRoutes();

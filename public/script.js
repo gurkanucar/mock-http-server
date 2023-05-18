@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const routePath = document.getElementById("routePath").value;
     const responseType = document.getElementById("responseType").value;
     const apiType = document.getElementById("apiType").value;
+    const responseData = document.getElementById("response").value;
 
     const newRoute = {
       routeName,
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
       routePath,
       responseType,
       apiType,
+      responseData,
     };
 
     fetch("/routes", {
