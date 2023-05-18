@@ -7,27 +7,31 @@ const {
   shouldThrowError,
 } = require("../helper/responseHelper");
 const fs = require("fs");
-const { getByRouteId } = require("./reponseDB");
+const { getByRouteId, loadResponses } = require("./reponseDB");
 
 const handleRestRequest = async (id, req, res, responseType, returnValue) => {
   try {
     const item = await getByRouteId(id);
+    if (item == undefined) {
+      return res.status(500).send("json parse error");
+    }
 
     console.log("My response:", item);
     const jsonData = JSON.parse(item.response);
 
     if (shouldThrowError(responseType)) {
-      res.status(jsonData.errorStatus).json(jsonData.error);
+      return res.status(jsonData.errorStatus).json(jsonData.error);
     } else {
-      res.status(jsonData.successStatus).json(jsonData.data);
+      return res.status(jsonData.successStatus).json(jsonData.data);
     }
   } catch (parseErr) {
     console.error(parseErr);
-    res.status(500).send("json parse error");
+    return res.status(500).send("json parse error");
   }
 };
 
 const setupRoutes = async (app) => {
+  loadResponses();
   loadRoutes().then((routes) => {
     routes.forEach((route) => {
       const {
@@ -39,35 +43,35 @@ const setupRoutes = async (app) => {
         apiType,
         returnValue,
       } = route;
-      console.log(httpMethod);
+      console.log(routePath);
 
       switch (httpMethod) {
         case HttpMethod.GET:
           app.get(routePath, (req, res) => {
             if (apiType === ApiType.REST) {
               console.log(routePath);
-              handleRestRequest(id, req, res, responseType, returnValue);
+              return handleRestRequest(id, req, res, responseType, returnValue);
             }
           });
           break;
         case HttpMethod.POST:
           app.post(routePath, (req, res) => {
             if (apiType === ApiType.REST) {
-              handleRestRequest(req, res, responseType, returnValue);
+              return handleRestRequest(id, req, res, responseType, returnValue);
             }
           });
           break;
         case HttpMethod.PUT:
           app.put(routePath, (req, res) => {
             if (apiType === ApiType.REST) {
-              handleRestRequest(req, res, responseType, returnValue);
+              return handleRestRequest(id, req, res, responseType, returnValue);
             }
           });
           break;
         case HttpMethod.PATCH:
           app.patch(routePath, (req, res) => {
             if (apiType === ApiType.REST) {
-              handleRestRequest(req, res, responseType, returnValue);
+              return handleRestRequest(id, req, res, responseType, returnValue);
             }
           });
           break;
@@ -75,7 +79,7 @@ const setupRoutes = async (app) => {
         case HttpMethod.DELETE:
           app.delete(routePath, (req, res) => {
             if (apiType === ApiType.REST) {
-              handleRestRequest(req, res, responseType, returnValue);
+              return handleRestRequest(id, req, res, responseType, returnValue);
             }
           });
           break;
