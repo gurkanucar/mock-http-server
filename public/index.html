@@ -1,54 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Routes Operations</title>
-  <script src="script.js" defer></script>
-</head>
-<body>
-  <h1>Routes Operations</h1>
+  <head>
+    <title>Routes Operations</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <h1>Routes Operations</h1>
 
-  <form id="addRouteForm">
-    <h2>Add Route</h2>
-    <label for="routeName">Route Name:</label>
-    <input type="text" id="routeName" name="routeName" required>
-    <label for="httpMethod">HTTP Method:</label>
-    <select id="httpMethod" name="httpMethod" required>
-      <option value="GET">GET</option>
-      <option value="POST">POST</option>
-      <option value="PUT">PUT</option>
-      <option value="PATCH">PATCH</option>
-      <option value="DELETE">DELETE</option>
-    </select>
-    <label for="routePath">Route Path:</label>
-    <input type="text" id="routePath" name="routePath" required>
-    <label for="responseType">Response Type:</label>
-    <select id="responseType" name="responseType" required>
-      <option value="RETURN_ERROR">Return Error</option>
-      <option value="RANDOM_ERROR">Random Error</option>
-      <option value="SUCCESS">Success</option>
-    </select>
-    <label for="apiType">API Type:</label>
-    <select id="apiType" name="apiType" required>
-      <option value="REST">REST</option>
-      <option value="SOAP">SOAP</option>
-    </select>
-    <label for="response">Response:</label>
-    <input type="text" id="response" name="response" required>
-    <button type="submit">Add Route</button>
-  </form>
+    <form id="addRouteForm">
+      <h2>Add Route</h2>
+      <label for="routeName">Route Name:</label>
+      <input type="text" id="routeName" name="routeName" required />
+      <label for="httpMethod">HTTP Method:</label>
+      <select id="httpMethod" name="httpMethod" required></select>
+      <label for="routePath">Route Path:</label>
+      <input type="text" id="routePath" name="routePath" required />
+      <label for="responseType">Response Type:</label>
+      <select id="responseType" name="responseType" required></select>
+      <label for="apiType">API Type:</label>
+      <select id="apiType" name="apiType" required></select>
+      <label for="response">Response:</label>
+      <input type="text" id="response" name="response" required />
+      <button type="submit">Add Route</button>
+    </form>
 
-  <table id="routesTable">
-    <thead>
-      <tr>
-        <th>Route Name</th>
-        <th>HTTP Method</th>
-        <th>Route Path</th>
-        <th>Response Type</th>
-        <th>API Type</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="routesTableBody"></tbody>
-  </table>
-</body>
+    <table id="routesTable">
+      <thead>
+        <tr>
+          <th>Route Name</th>
+          <th>HTTP Method</th>
+          <th>Route Path</th>
+          <th>Response Type</th>
+          <th>API Type</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="routesTableBody"></tbody>
+    </table>
+  </body>
 </html>
