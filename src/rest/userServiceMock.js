@@ -20,7 +20,11 @@ exports.getUsers = (req, res, responseType = ResponseType.SUCCESS) => {
 exports.getUserById = (req, res, responseType = ResponseType.SUCCESS) => {
   try {
     const userId = req.params.id;
-    res.json(userResponse.find((x) => x.id == userId));
+    const user = userResponse.find((x) => x.id == userId);
+    if (user == undefined) {
+      throw new Error("user not found!");
+    }
+    res.json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -29,7 +33,11 @@ exports.getUserById = (req, res, responseType = ResponseType.SUCCESS) => {
 exports.deleteUserById = (req, res, responseType = ResponseType.SUCCESS) => {
   try {
     const userId = req.params.id;
-    removeElementFromArray(review, "id", userId);
+    const user = userResponse.find((x) => x.id == userId);
+    if (user == undefined) {
+      throw new Error("user not found!");
+    }
+    removeElementFromArray(userResponse, "id", userId);
     res.json({
       message: "success",
     });

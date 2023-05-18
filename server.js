@@ -4,6 +4,7 @@ const {
   getUsers,
   getUserById,
   deleteUserById,
+  createNewUser,
 } = require("./src/rest/userServiceMock");
 const { ResponseType } = require("./src/helper/responseHelper");
 const app = express();
@@ -26,18 +27,18 @@ app.get("/", (req, res) => {
 
 // ****** REST MOCKS ********** //
 
-app.get("/user", (req, res) => {
+app.get("/user", express.json(), (req, res) => {
   getUsers(req, res, ResponseType.RANDOM_ERROR);
 });
 
-app.get("/user/:id", (req, res) => {
+app.get("/user/:id", express.json(), (req, res) => {
   getUserById(req, res);
 });
 
-app.post("/user", (req, res) => {
+app.post("/user", express.json(), (req, res) => {
   createNewUser(req, res);
 });
 
-app.delete("/user", (req, res) => {
+app.delete("/user/:id", express.json(), (req, res) => {
   deleteUserById(req, res);
 });
