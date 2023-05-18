@@ -4,6 +4,10 @@
 
 ### How to run
 
+- configure .env file
+
+- run following commands below
+
 ```
     npm i
     node server.js
@@ -32,7 +36,7 @@
 
 #### Show Errors:
 
-- You can show errors randomly by giving "ResponsType". Default is "SUCCESS" :
+- You can show errors randomly by giving "ResponseType". Default is "SUCCESS" :
 
 ```
     ResponseType = {
