@@ -24,14 +24,32 @@ require("./src/soap/api/soapMock")(app);
 
 // ****** RabbitMQ ********** //
 
-const exchange = "direct_exchange";
-const queue = "direct_queue";
-const routingKey = "direct_routing_key";
+const exchangeDirect = "direct_exchange";
+const queueDirect = "direct_queue";
+const routingKeyDirect = "direct_routing_key";
 
-rabbitMQ.sendDirectMessage(exchange, routingKey, "Direct message");
+const exchangeFanout = "fanout_exchange";
+const queueFanout = "fanout_queue";
 
-const handleMessage = (message) => {
-  console.log("Processing message:", message);
+const exchangeTopic = "topic_exchange";
+const queueTopic = "topic_queue";
+const routingKeyTopic = "topic_routing_key";
+
+const exchangeHeader = "header_exchange";
+const headers = { type: "important", priority: "high" };
+const queueHeader = "header_queue";
+
+
+rabbitMQ.sendDirectMessage(exchangeDirect, routingKeyDirect, "Direct message");
+rabbitMQ.sendFanoutMessage(exchangeFanout, "fanout message");
+rabbitMQ.sendTopicMessage(exchangeTopic, routingKeyTopic,"topic message");
+rabbitMQ.sendHeaderMessage(exchangeHeader, "header message", headers);
+
+const handleMessage = (message,exchangeType) => {
+  console.log(`${exchangeType} | Processing message: ${message}`);
 };
 
-rabbitMQ.startDirectListener(exchange, queue, routingKey, handleMessage);
+rabbitMQ.startDirectListener(exchangeDirect, queueDirect, routingKeyDirect, handleMessage);
+rabbitMQ.startFanoutListener(exchangeFanout, queueFanout, handleMessage);
+rabbitMQ.startTopicListener(exchangeTopic, queueTopic, routingKeyTopic,handleMessage);
+rabbitMQ.startHeaderListener(exchangeHeader, queueHeader, headers, handleMessage);

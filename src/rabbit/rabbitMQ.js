@@ -65,15 +65,15 @@ const startListener = async (
     channel.consume(queue, (msg) => {
       if (msg !== null) {
         const message = msg.content.toString();
-        console.log("Received message from RabbitMQ:", message);
-        callback(message);
+        console.log("Received message => ", message);
+        callback(message, exchangeType);
         channel.ack(msg);
       }
     });
 
-    console.log("RabbitMQ listener started");
+    console.log("started");
   } catch (error) {
-    console.error("Failed to start RabbitMQ listener", error);
+    console.error("failed", error);
   }
 };
 
