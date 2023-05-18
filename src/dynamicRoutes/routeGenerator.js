@@ -30,60 +30,60 @@ const handleRestRequest = (req, res, responseType, returnValue) => {
   });
 };
 
-const setupRoutes = (app) => {
-  routes = loadRoutes();
+const setupRoutes = async (app) => {
+  loadRoutes().then((routes) => {
+    routes.forEach((route) => {
+      const {
+        id,
+        routeName,
+        httpMethod,
+        routePath,
+        responseType,
+        apiType,
+        returnValue,
+      } = route;
+      console.log(httpMethod);
 
-  routes.forEach((route) => {
-    const {
-      id,
-      routeName,
-      httpMethod,
-      routePath,
-      responseType,
-      apiType,
-      returnValue,
-    } = route;
-    console.log(httpMethod);
+      switch (httpMethod) {
+        case HttpMethod.GET:
+          app.get(routePath, (req, res) => {
+            if (apiType === ApiType.REST) {
+              console.log(routePath);
+              handleRestRequest(req, res, responseType, returnValue);
+            }
+          });
+          break;
+        case HttpMethod.POST:
+          app.post(routePath, (req, res) => {
+            if (apiType === ApiType.REST) {
+              handleRestRequest(req, res, responseType, returnValue);
+            }
+          });
+          break;
+        case HttpMethod.PUT:
+          app.put(routePath, (req, res) => {
+            if (apiType === ApiType.REST) {
+              handleRestRequest(req, res, responseType, returnValue);
+            }
+          });
+          break;
+        case HttpMethod.PATCH:
+          app.patch(routePath, (req, res) => {
+            if (apiType === ApiType.REST) {
+              handleRestRequest(req, res, responseType, returnValue);
+            }
+          });
+          break;
 
-    switch (httpMethod) {
-      case HttpMethod.GET:
-        app.get(routePath, (req, res) => {
-          if (apiType === ApiType.REST) {
-            console.log(routePath);
-            handleRestRequest(req, res, responseType, returnValue);
-          }
-        });
-        break;
-      case HttpMethod.POST:
-        app.post(routePath, (req, res) => {
-          if (apiType === ApiType.REST) {
-            handleRestRequest(req, res, responseType, returnValue);
-          }
-        });
-        break;
-      case HttpMethod.PUT:
-        app.put(routePath, (req, res) => {
-          if (apiType === ApiType.REST) {
-            handleRestRequest(req, res, responseType, returnValue);
-          }
-        });
-        break;
-      case HttpMethod.PATCH:
-        app.patch(routePath, (req, res) => {
-          if (apiType === ApiType.REST) {
-            handleRestRequest(req, res, responseType, returnValue);
-          }
-        });
-        break;
-
-      case HttpMethod.DELETE:
-        app.delete(routePath, (req, res) => {
-          if (apiType === ApiType.REST) {
-            handleRestRequest(req, res, responseType, returnValue);
-          }
-        });
-        break;
-    }
+        case HttpMethod.DELETE:
+          app.delete(routePath, (req, res) => {
+            if (apiType === ApiType.REST) {
+              handleRestRequest(req, res, responseType, returnValue);
+            }
+          });
+          break;
+      }
+    });
   });
 };
 

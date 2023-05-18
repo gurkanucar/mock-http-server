@@ -14,19 +14,18 @@ const convertEnumsToObjects = (routes) => {
     convertedRoute.responseType = ResponseType[route.responseType];
     convertedRoute.apiType = ApiType[route.apiType];
 
-
     return convertedRoute;
   });
 };
 
-const loadRoutes = () => {
+const loadRoutes = async () => {
   try {
     if (!fs.existsSync("routes.json")) {
       fs.writeFileSync("routes.json", "[]");
       console.log("routes.json file created.");
     }
 
-    const routesData = fs.readFileSync("routes.json", "utf8");
+    const routesData = await fs.promises.readFile("routes.json", "utf8");
     const parsedRoutes = JSON.parse(routesData);
     routes = convertEnumsToObjects(parsedRoutes);
     return routes;
@@ -45,9 +44,13 @@ const saveRoutes = () => {
 };
 
 const addRoute = (newRoute) => {
+  console.log(newRoute);
   const lastRoute = routes[routes.length - 1];
   const newId = lastRoute ? lastRoute.id + 1 : 1;
-  newRoute.id = newId;
+  newRoute = {
+    ...newRoute,
+    id: newId,
+  };
   routes.push(newRoute);
   saveRoutes();
 };
@@ -70,6 +73,7 @@ const updateRoute = (updatedRoute) => {
 
 module.exports = {
   addRoute,
+  saveRoutes,
   deleteRoute,
   updateRoute,
   loadRoutes,

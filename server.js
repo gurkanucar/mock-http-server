@@ -4,6 +4,13 @@ const app = express();
 const rabbitMQ = require("./src/rabbit/rabbitMQ");
 
 const { setupRoutes } = require("./src/dynamicRoutes/routeGenerator");
+const {
+  loadRoutes,
+  saveRoutes,
+  deleteRoute,
+  updateRoute,
+  addRoute,
+} = require("./src/dynamicRoutes/routeDB");
 
 const port = 3000;
 
@@ -17,14 +24,58 @@ app.listen(port, () => {
   console.log(`server started at port ${port}`);
 });
 
+// app.get("/", (req, res) => {
+//   res.send("Hello World!");
+// });
+
+app.use(express.static(__dirname + "/public"));
+
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.sendFile(__dirname + "/public/index.html");
 });
+
+app.get("/routes", express.json(), async (req, res) => {
+  setupRoutes(app);
+  const routes = await loadRoutes();
+  res.json(routes);
+});
+app.post("/routes", express.json(), async (req, res) => {
+  const newRoute = req.body;
+  addRoute(newRoute);
+  setupRoutes(app);
+  res.sendStatus(200);
+});
+
+app.delete("/routes/:id", express.json(), (req, res) => {
+  const routeId = parseInt(req.params.id);
+  deleteRoute(routeId);
+  setupRoutes(app);
+  res.sendStatus(200);
+});
+
+app.put("/routes/:id", express.json(), (req, res) => {
+  const routeId = parseInt(req.params.id);
+  const updatedRoute = req.body;
+  updatedRoute.id = routeId;
+  updateRoute(updatedRoute);
+  setupRoutes(app);
+  res.sendStatus(200);
+});
+
+setupRoutes(app);
+
+// setupRoutes(app);
+
+// loadRoutes();
+
+// saveRoutes();
+
+// deleteRoute();
+
+// updateRoute();
 
 // require("./src/rest/api/restMock")(app);
 // require("./src/soap/api/soapMock")(app);
-
-setupRoutes(app);
 
 // ****** RabbitMQ ********** //
 
