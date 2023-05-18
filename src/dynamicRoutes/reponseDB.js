@@ -18,6 +18,12 @@ const loadResponses = async () => {
   }
 };
 
+const getByRouteId = async (id) => {
+  const data = await loadResponses();
+  const found = data.find((x) => x.routeId == id);
+  return found;
+};
+
 const saveResponses = () => {
   fs.writeFile("responses.json", JSON.stringify(responses), "utf8", (err) => {
     if (err) {
@@ -60,4 +66,5 @@ module.exports = {
   deleteResponse,
   updateResponse,
   loadResponses,
+  getByRouteId,
 };
