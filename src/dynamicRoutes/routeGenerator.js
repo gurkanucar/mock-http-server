@@ -4,6 +4,7 @@ const {
   shouldThrowError,
 } = require("../helper/responseHelper");
 const { getByRouteId, loadResponses } = require("./responseDB");
+const { loadRoutes } = require("./routeDB");
 
 const handleRestRequest = async (id, req, res, responseType, returnValue) => {
   try {

@@ -61,7 +61,6 @@ app.delete("/routes/:id", express.json(), async (req, res) => {
 
 setupRoutes(app);
 
-
 // setupRoutes(app);
 
 // loadRoutes();
