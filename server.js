@@ -43,29 +43,39 @@ const routes = [
     returnValue: "user.json",
   },
 
-  // {
-  //   id: 2,
-  //   routeName: "userById",
-  //   httpMethod: HttpMethod.GET,
-  //   routePath: "/user/:id",
-  //   responseType: ResponseType.RANDOM_ERROR,
-  //   apiType: ApiType.REST,
-  //   returnValue: "userById.txt",
-  // },
+  {
+    id: 2,
+    routeName: "userById",
+    httpMethod: HttpMethod.GET,
+    routePath: "/api/user/:id",
+    responseType: ResponseType.RANDOM_ERROR,
+    apiType: ApiType.REST,
+    returnValue: "userById.json",
+  },
 
-  // {
-  //   id: 3,
-  //   routeName: "userCreate",
-  //   httpMethod: HttpMethod.POST,
-  //   routePath: "/user",
-  //   responseType: ResponseType.RANDOM_ERROR,
-  //   apiType: ApiType.REST,
-  //   returnValue: "userCreate.txt",
-  // },
+  {
+    id: 3,
+    routeName: "userCreate",
+    httpMethod: HttpMethod.POST,
+    routePath: "/api/user",
+    responseType: ResponseType.RANDOM_ERROR,
+    apiType: ApiType.REST,
+    returnValue: "userCreate.json",
+  },
+
+  {
+    id: 4,
+    routeName: "userList",
+    httpMethod: HttpMethod.GET,
+    routePath: "/api/users",
+    responseType: ResponseType.RANDOM_ERROR,
+    apiType: ApiType.REST,
+    returnValue: "userList.json",
+  },
 ];
 
 function handleRestRequest(req, res, responseType, returnValue) {
-  fs.readFile(returnValue, "utf8", (err, data) => {
+  fs.readFile("./src/data/" + returnValue, "utf8", (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).send("file error");
@@ -96,10 +106,40 @@ routes.forEach((route) => {
     apiType,
     returnValue,
   } = route;
-
+  console.log(route.routePath);
   switch (httpMethod) {
     case HttpMethod.GET:
       app.get(routePath, (req, res) => {
+        if (apiType === ApiType.REST) {
+          console.log(routePath);
+          handleRestRequest(req, res, responseType, returnValue);
+        }
+      });
+      break;
+    case HttpMethod.POST:
+      app.post(routePath, (req, res) => {
+        if (apiType === ApiType.REST) {
+          handleRestRequest(req, res, responseType, returnValue);
+        }
+      });
+      break;
+    case HttpMethod.PUT:
+      app.put(routePath, (req, res) => {
+        if (apiType === ApiType.REST) {
+          handleRestRequest(req, res, responseType, returnValue);
+        }
+      });
+      break;
+    case HttpMethod.PATCH:
+      app.patch(routePath, (req, res) => {
+        if (apiType === ApiType.REST) {
+          handleRestRequest(req, res, responseType, returnValue);
+        }
+      });
+      break;
+
+    case HttpMethod.DELETE:
+      app.delete(routePath, (req, res) => {
         if (apiType === ApiType.REST) {
           handleRestRequest(req, res, responseType, returnValue);
         }

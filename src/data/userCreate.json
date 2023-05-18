@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": 1,
+    "username": "grkn"
+  },
+  "error": {
+    "message": "user already exists!"
+  },
+  "successStatus": 201,
+  "errorStatus": 409
+}

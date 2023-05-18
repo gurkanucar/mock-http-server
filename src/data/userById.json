@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": 2,
+    "username": "grkn"
+  },
+  "error": {
+    "message": "user not found!"
+  },
+  "successStatus": 200,
+  "errorStatus": 404
+}
