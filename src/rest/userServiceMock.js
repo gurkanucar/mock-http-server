@@ -22,7 +22,8 @@ exports.getUserById = (req, res, responseType = ResponseType.SUCCESS) => {
     const userId = req.params.id;
     const user = userResponse.find((x) => x.id == userId);
     if (user == undefined) {
-      throw new Error("user not found!");
+      // throw new Error("user not found!");
+      res.status(404).json({ error: "user not found!" });
     }
     res.json(user);
   } catch (error) {
@@ -35,7 +36,7 @@ exports.deleteUserById = (req, res, responseType = ResponseType.SUCCESS) => {
     const userId = req.params.id;
     const user = userResponse.find((x) => x.id == userId);
     if (user == undefined) {
-      throw new Error("user not found!");
+      res.status(404).json({ error: "user not found!" });
     }
     removeElementFromArray(userResponse, "id", userId);
     res.json({

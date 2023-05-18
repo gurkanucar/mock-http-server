@@ -1,12 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const {
-  getUsers,
-  getUserById,
-  deleteUserById,
-  createNewUser,
-} = require("./src/rest/userServiceMock");
-const { ResponseType } = require("./src/helper/responseHelper");
 const app = express();
 
 const port = 3000;
@@ -25,20 +18,4 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// ****** REST MOCKS ********** //
-
-app.get("/user", express.json(), (req, res) => {
-  getUsers(req, res, ResponseType.RANDOM_ERROR);
-});
-
-app.get("/user/:id", express.json(), (req, res) => {
-  getUserById(req, res);
-});
-
-app.post("/user", express.json(), (req, res) => {
-  createNewUser(req, res);
-});
-
-app.delete("/user/:id", express.json(), (req, res) => {
-  deleteUserById(req, res);
-});
+require("./src/rest/api/restMock")(app);
