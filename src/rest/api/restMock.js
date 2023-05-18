@@ -7,7 +7,7 @@ const {
   getUserById,
   createNewUser,
   deleteUserById,
-} = require("../userServiceMock");
+} = require("../service/userServiceMock");
 
 module.exports = (app) => {
   app.get("/user", express.json(), (req, res) => {

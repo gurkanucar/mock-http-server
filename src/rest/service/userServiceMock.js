@@ -1,9 +1,9 @@
-const { removeElementFromArray } = require("../helper/mutateHelper");
+const { removeElementFromArray } = require("../../helper/mutateHelper");
 const {
   ResponseType,
   handleResponseType,
-} = require("../helper/responseHelper");
-const { userResponse } = require("./data/userResponse");
+} = require("../../helper/responseHelper");
+const { userResponse } = require("../data/userResponse");
 
 exports.getUsers = (req, res, responseType = ResponseType.SUCCESS) => {
   try {
