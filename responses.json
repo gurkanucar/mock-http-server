@@ -5,12 +5,12 @@
     "id": 1
   },
   {
-    "response":  "{\"data\":{\"id\":1,\"username\":\"grkn\"},\"error\":{\"message\":\"my custom error\"},\"successStatus\":200,\"errorStatus\":400}",
+    "response": "{\"data\":{\"id\":1,\"username\":\"grkn\"},\"error\":{\"message\":\"my custom error\"},\"successStatus\":200,\"errorStatus\":400}",
     "routeId": 1,
     "id": 2
   },
   {
-    "response":  "{\"data\":{\"id\":2,\"username\":\"grkn\"},\"error\":{\"message\":\"user not found!\"},\"successStatus\":200,\"errorStatus\":404}",
+    "response": "{\"data\":{\"id\":2,\"username\":\"grkn\"},\"error\":{\"message\":\"user not found!\"},\"successStatus\":200,\"errorStatus\":404}",
     "routeId": 2,
     "id": 3
   },
@@ -23,5 +23,10 @@
     "response": "{\"data\":[{\"id\":1,\"username\":\"grkn\"},{\"id\":2,\"username\":\"ali\"},{\"id\":3,\"username\":\"veli\"}],\"error\":{\"code\":\"400\",\"message\":\"something went wrong\"},\"successStatus\":201,\"errorStatus\":400}",
     "routeId": 4,
     "id": 5
+  },
+  {
+    "response": "{\"data\":{\"id\":2,\"message\":\"as\"},\"error\":{\"message\":\"user not found!\"},\"successStatus\":200,\"errorStatus\":404}",
+    "routeId": 5,
+    "id": 6
   }
 ]
