@@ -4,7 +4,7 @@
     "routeName": "user",
     "httpMethod": "GET",
     "routePath": "/mock/api/user",
-    "responseType": "RANDOM_ERROR",
+    "responseType": "RETURN_ERROR",
     "apiType": "REST"
   },
   {
@@ -12,7 +12,7 @@
     "routeName": "userById",
     "httpMethod": "GET",
     "routePath": "/mock/api/user/:id",
-    "responseType": "RANDOM_ERROR",
+    "responseType": "SUCCESS",
     "apiType": "REST"
   },
   {
