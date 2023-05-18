@@ -4,9 +4,38 @@
     <title>Routes Operations</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
   <body>
     <h1>Routes Operations</h1>
+
+    <div id="dialog" title="Set Response" style="display: none">
+      <fieldset>
+        <label for="successResponseInput">Success Response</label>
+        <input type="text" id="successResponseInput" required class="text" />
+        <label for="errorResponseInput">Error Response</label>
+        <input type="text" id="errorResponseInput" required class="text" />
+        <label for="successStatusInput">Success Status</label>
+        <input
+          type="number"
+          id="successStatusInput"
+          value="200"
+          required
+          class="text"
+        />
+        <label for="errorStatusInput">Error Status</label>
+        <input type="number" id="errorStatusInput" value="400" class="text" />
+
+        <button style="margin-top: 20px" id="setResponseBtn">
+          Set Response
+        </button>
+      </fieldset>
+    </div>
 
     <form id="addRouteForm">
       <h2>Add Route</h2>
@@ -23,6 +52,7 @@
       <label for="response">Response:</label>
       <input type="text" id="response" name="response" required />
       <button type="submit">Add Route</button>
+      <button id="responseHelper" type="button">Generate</button>
     </form>
 
     <table id="routesTable">
