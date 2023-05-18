@@ -2,6 +2,10 @@
 
 ## Simple node.js express server for testing purposes
 
+<h1 align="center">
+  <img src="./images/ex1.jpg"/>
+</h1>
+
 ### How to run
 
 - configure .env file
