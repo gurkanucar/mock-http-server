@@ -3,20 +3,6 @@ const cors = require("cors");
 const app = express();
 
 const { setupRoutes } = require("./src/dynamicRoutes/routeGenerator");
-const {
-  loadRoutes,
-  saveRoutes,
-  deleteRoute,
-  updateRoute,
-  addRoute,
-} = require("./src/dynamicRoutes/routeDB");
-const {
-  addResponse,
-  loadResponses,
-  deleteResponse,
-  updateResponse,
-  getByRouteId,
-} = require("./src/dynamicRoutes/responseDB");
 
 const port = 3000;
 
@@ -36,45 +22,9 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-app.get("/routes", express.json(), async (req, res) => {
-  const routes = await loadRoutes();
-  res.json(routes);
-});
-
-app.post("/routes", express.json(), async (req, res) => {
-  const newRoute = req.body;
-
-  const removeProp = "responseData";
-
-  const { [removeProp]: responseData, ...rest } = newRoute;
-
-  const id = await addRoute(rest);
-  await addResponse({
-    response: newRoute.responseData,
-    routeId: id,
-  });
-  await setupRoutes(app);
-  res.sendStatus(200);
-});
-
-app.delete("/routes/:id", express.json(), async (req, res) => {
-  const routeId = parseInt(req.params.id);
-  await deleteRoute(routeId);
-  await setupRoutes(app);
-  res.sendStatus(200);
-});
+require("./src/dynamicRoutes/dynamicRoutesHandler")(app);
 
 setupRoutes(app);
-
-// setupRoutes(app);
-
-// loadRoutes();
-
-// saveRoutes();
-
-// deleteRoute();
-
-// updateRoute();
 
 // require("./src/rest/api/restMock")(app);
 // require("./src/soap/api/soapMock")(app);
