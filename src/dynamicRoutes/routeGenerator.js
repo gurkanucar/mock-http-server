@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const APP_PREFIX = process.env.APP_PREFIX;
 
+const { clearData } = require("../helper/parser");
 const {
   HttpMethod,
   ApiType,
@@ -17,9 +18,8 @@ const handleRestRequest = async (id, req, res, responseType, returnValue) => {
       return res.status(500).send("json parse error");
     }
 
-    console.log("My response:", item);
-    const jsonData = JSON.parse(item.response);
-
+    const jsonData = clearData(item.response);
+    console.log("My response:", jsonData);
     if (shouldThrowError(responseType)) {
       return res.status(jsonData.errorStatus).json(jsonData.error);
     } else {
