@@ -1,3 +1,7 @@
+require("dotenv").config();
+
+const APP_PREFIX = process.env.APP_PREFIX;
+
 const express = require("express");
 const {
   loadRoutes,
@@ -9,6 +13,10 @@ const {
 const { setupRoutes } = require("./routeGenerator");
 
 module.exports = (app) => {
+  app.get("/prefix", express.json(), async (req, res) => {
+    res.json({ prefix: APP_PREFIX });
+  });
+
   app.get("/route", express.json(), async (req, res) => {
     const routes = await loadRoutes();
     res.json(routes);

@@ -103,18 +103,28 @@ $(document).ready(function () {
 
   const fetchRoutes = () => {
     $.ajax({
-      url: "/route",
+      url: "/prefix",
       type: "GET",
-      success: (routes) => {
-        renderRoutesTable(routes);
+      success: (prefixResponse) => {
+        const prefix = prefixResponse.prefix;
+        $.ajax({
+          url: "/route",
+          type: "GET",
+          success: (routes) => {
+            renderRoutesTable(routes, prefix);
+          },
+          error: () => {
+            console.error("Error fetching routes.");
+          },
+        });
       },
       error: () => {
-        console.error("Error fetching routes.");
+        console.error("Error fetching prefix.");
       },
     });
   };
 
-  const renderRoutesTable = (routes) => {
+  const renderRoutesTable = (routes, prefix) => {
     if (!Array.isArray(routes)) {
       console.error("Invalid routes data.");
       return;
@@ -128,7 +138,7 @@ $(document).ready(function () {
       row.html(`
         <td>${route.routeName}</td>
         <td>${route.httpMethod}</td>
-        <td>${route.routePath}</td>
+        <td><strong>${prefix}</strong>${route.routePath}</td>
         <td>${route.responseType}</td>
         <td>${route.apiType}</td>
         <td>${route.delay}</td>
