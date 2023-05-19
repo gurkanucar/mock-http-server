@@ -10,6 +10,7 @@ const handleRequest = async (req, res, route) => {
     id,
     httpMethod,
     routePath,
+    delay,
     responseType,
     apiType,
     successResponse,
@@ -19,22 +20,27 @@ const handleRequest = async (req, res, route) => {
     routeName,
   } = route;
 
-  res.set(
-    "Content-Type",
-    apiType == ApiType.REST ? "application/json" : "application/soap+xml"
-  );
-  try {
-    if (shouldThrowError(responseType)) {
-      return res.status(Number(errorStatus)).send(errorResponse);
-    } else {
-      return res.status(Number(successStatus)).send(successResponse);
+  delay = Number(delay);
+  if (delay == undefined || delay == null) delay = 0;
+
+  setTimeout(() => {
+    res.set(
+      "Content-Type",
+      apiType == ApiType.REST ? "application/json" : "application/soap+xml"
+    );
+    try {
+      if (shouldThrowError(responseType)) {
+        return res.status(Number(errorStatus)).send(errorResponse);
+      } else {
+        return res.status(Number(successStatus)).send(successResponse);
+      }
+    } catch (parseErr) {
+      console.error(parseErr);
+      return res
+        .status(500)
+        .send(apiType == ApiType.REST ? "json parse error" : "soap error");
     }
-  } catch (parseErr) {
-    console.error(parseErr);
-    return res
-      .status(500)
-      .send(apiType == ApiType.REST ? "json parse error" : "soap error");
-  }
+  }, delay);
 };
 
 const setupRoutes = async (app) => {

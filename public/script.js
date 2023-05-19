@@ -57,6 +57,7 @@ $(document).ready(function () {
     const errorResponse = $("#errorResponse").val();
     const successStatus = $("#successStatus").val();
     const errorStatus = $("#errorStatus").val();
+    const delay = $("#delay").val();
 
     return {
       routeName,
@@ -64,6 +65,7 @@ $(document).ready(function () {
       routePath,
       responseType,
       apiType,
+      delay,
       successResponse,
       errorResponse,
       successStatus,
@@ -129,6 +131,7 @@ $(document).ready(function () {
         <td>${route.routePath}</td>
         <td>${route.responseType}</td>
         <td>${route.apiType}</td>
+        <td>${route.delay}</td>
         <td class="text-center" style="width: 220px;">
           <button class="btn btn-danger delete-button mx-2" data-route-id="${route.id}">Delete</button>
           <button class="btn btn-primary edit-button mx-2" data-route-id="${route.id}">Edit</button>
@@ -146,7 +149,7 @@ $(document).ready(function () {
     const routeId = $(this).data("route-id");
     const route = getRouteById(routeId);
     if (route) {
-      populateUpdateForm(route);
+      updateFormData(route);
       $("#addRouteBtn").hide();
       $("#updateRouteBtn").show();
     }
@@ -169,7 +172,7 @@ $(document).ready(function () {
   const getRouteById = (routeId) => {
     let route;
     $.ajax({
-      url: `/route/${routeId}`, // Use the correct endpoint
+      url: `/route/${routeId}`,
       type: "GET",
       async: false,
       success: (response) => {
@@ -182,7 +185,7 @@ $(document).ready(function () {
     return route;
   };
 
-  const populateUpdateForm = (route) => {
+  const updateFormData = (route) => {
     $("#routeName").val(route.routeName);
     $("#httpMethod").val(route.httpMethod);
     $("#routePath").val(route.routePath);
@@ -192,6 +195,7 @@ $(document).ready(function () {
     $("#errorResponse").val(route.errorResponse);
     $("#successStatus").val(route.successStatus);
     $("#errorStatus").val(route.errorStatus);
+    $("#delay").val(route.delay);
 
     addRouteForm.data("route-id", route.id);
   };
