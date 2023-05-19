@@ -1,1 +1,67 @@
-[{"routeName":"get users","httpMethod":"GET","routePath":"/api/user","responseType":"RANDOM_ERROR","apiType":"SOAP","delay":"5000","successResponse":"      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>","errorResponse":"      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>","successStatus":"200","errorStatus":"400","id":"52c42c56-63f4-4b27-8623-1ee397f19be2"},{"routeName":"create user","httpMethod":"DELETE","routePath":"/user","responseType":"SUCCESS","apiType":"SOAP","delay":"0","successResponse":"      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>","errorResponse":"      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>","successStatus":"200","errorStatus":"400","id":"5ca4f2e5-b3ab-4459-a03e-01697e939e42"},{"routeName":"create review","httpMethod":"POST","routePath":"/api/review","responseType":"RETURN_ERROR","apiType":"REST","delay":"2000","successResponse":"{\n    \"userId\":5 ,\n    \"requestUser\": {\n        \"userId\": 1\n    },\n    \"restaurantId\": 2,\n    \"star\": 1,\n    \"content\": \"superdi\"\n}","errorResponse":"{\n    \"message\": \"error from mock\"\n}","successStatus":"200","errorStatus":"400","id":"43c687a9-d258-442d-be15-2125e3008c53"}]
+[
+  {
+    "routeName": "get users",
+    "httpMethod": "GET",
+    "routePath": "/api/user",
+    "responseType": "RANDOM_ERROR",
+    "apiType": "SOAP",
+    "delay": "5000",
+    "successResponse": "      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>",
+    "errorResponse": "      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>",
+    "successStatus": "200",
+    "errorStatus": "400",
+    "id": "52c42c56-63f4-4b27-8623-1ee397f19be2"
+  },
+  {
+    "routeName": "create user",
+    "httpMethod": "GET",
+    "routePath": "/user",
+    "responseType": "SUCCESS",
+    "apiType": "SOAP",
+    "delay": "0",
+    "successResponse": "      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>",
+    "errorResponse": "      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>",
+    "successStatus": "200",
+    "errorStatus": "400",
+    "id": "5ca4f2e5-b3ab-4459-a03e-01697e939e42"
+  },
+  {
+    "routeName": "create review",
+    "httpMethod": "POST",
+    "routePath": "/api/review",
+    "responseType": "RETURN_ERROR",
+    "apiType": "REST",
+    "delay": "2000",
+    "successResponse": "{\n    \"userId\":5 ,\n    \"requestUser\": {\n        \"userId\": 1\n    },\n    \"restaurantId\": 2,\n    \"star\": 1,\n    \"content\": \"superdi\"\n}",
+    "errorResponse": "{\n    \"message\": \"error from mock\"\n}",
+    "successStatus": "200",
+    "errorStatus": "400",
+    "id": "43c687a9-d258-442d-be15-2125e3008c53"
+  },
+  {
+    "routeName": "send sms",
+    "httpMethod": "POST",
+    "routePath": "/sms",
+    "responseType": "RETURN_ERROR",
+    "apiType": "SOAP",
+    "delay": "0",
+    "successResponse": "<SOAP-ENV:Envelope\n   xmlns:SOAP-ENV = \"http://www.w3.org/2001/12/soap-envelope\"\n   SOAP-ENV:encodingStyle = \"http://www.w3.org/2001/12/soap-encoding\">\n\n   <SOAP-ENV:Body xmlns:m = \"http://www.xyz.org/quotations\">\n      <m:GetQuotation>\n         <m:QuotationsName>MiscroSoft</m:QuotationsName>\n      </m:GetQuotation>\n   </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+    "errorResponse": "<env:Envelope  xmlns:env=\"http://www.w3.org/2001/12/soap-envelope\" >\n    <env:Body>\n        <env:Fault>\n\n          <env:Code>\n            <env:Value>env:Sender</env:Value>\n          </env:Code>\n\n          <env:Reason>\n            <env:Text xml:lang=\"en-US\">Processing error</env:Text>\n            <env:Text xml:lang=\"da\">Processerings-fejl</env:Text>\n          </env:Reason>\n\n        </env:Fault>\n    </env:Body>\n</env:Envelope>",
+    "successStatus": "200",
+    "errorStatus": "400",
+    "id": "75f559fa-5fa4-4554-b2a6-3ac7cd6d2297"
+  },
+  {
+    "routeName": "update product",
+    "httpMethod": "PUT",
+    "routePath": "/api/product",
+    "responseType": "RANDOM_ERROR",
+    "apiType": "REST",
+    "delay": "500",
+    "successResponse": "{\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"phone\"\n  },\n\n  \"successStatus\": 200,\n  \"errorStatus\": 400\n}\n",
+    "errorResponse": "{\n    \"message\": \"my custom error\"\n  }",
+    "successStatus": "200",
+    "errorStatus": "400",
+    "id": "cd4ec0d7-601d-4abb-8023-d732b7840286"
+  }
+]
