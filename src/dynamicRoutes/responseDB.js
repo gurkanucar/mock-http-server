@@ -5,11 +5,14 @@ let responses = [];
 
 const loadResponses = async () => {
   try {
-    if (!fs.existsSync("responses.json")) {
-      fs.writeFileSync("responses.json", "[]");
+    if (!fs.existsSync("data/responses.json")) {
+      fs.writeFileSync("data/responses.json", "[]");
       console.log("responses.json file created.");
     }
-    const responsesData = await fs.promises.readFile("responses.json", "utf8");
+    const responsesData = await fs.promises.readFile(
+      "data/responses.json",
+      "utf8"
+    );
     const parsedResponses = JSON.parse(responsesData);
     responses = parsedResponses;
     return parsedResponses;
@@ -26,11 +29,16 @@ const getByRouteId = async (id) => {
 };
 
 const saveResponses = () => {
-  fs.writeFile("responses.json", JSON.stringify(responses), "utf8", (err) => {
-    if (err) {
-      console.error("Error saving response file:", err);
+  fs.writeFile(
+    "data/responses.json",
+    JSON.stringify(responses),
+    "utf8",
+    (err) => {
+      if (err) {
+        console.error("Error saving response file:", err);
+      }
     }
-  });
+  );
 };
 
 const addResponse = async (newResponse) => {
@@ -60,7 +68,9 @@ const updateResponse = async (updatedResponse) => {
     (route) => String(route.routeId) == updatedResponse.routeId
   );
   if (index !== -1) {
-    responses[index].response = clearData(updatedResponse.response);
+    responses[index].response = JSON.stringify(
+      clearData(updatedResponse.response)
+    );
     saveResponses();
   } else {
     throw new Error("something went wrong!");

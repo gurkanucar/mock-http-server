@@ -25,12 +25,12 @@ const convertEnumsToObjects = (routes) => {
 
 const loadRoutes = async () => {
   try {
-    if (!fs.existsSync("routes.json")) {
-      fs.writeFileSync("routes.json", "[]");
-      console.log("routes.json file created.");
+    if (!fs.existsSync("data/routes.json")) {
+      fs.writeFileSync("data/routes.json", "[]");
+      console.log("data/routes.json file created.");
     }
 
-    const routesData = await fs.promises.readFile("routes.json", "utf8");
+    const routesData = await fs.promises.readFile("data/routes.json", "utf8");
     const parsedRoutes = JSON.parse(routesData);
     routes = convertEnumsToObjects(parsedRoutes);
     return routes;
@@ -41,7 +41,7 @@ const loadRoutes = async () => {
 };
 
 const saveRoutes = async () => {
-  fs.writeFile("routes.json", JSON.stringify(routes), "utf8", (err) => {
+  fs.writeFile("data/routes.json", JSON.stringify(routes), "utf8", (err) => {
     if (err) {
       console.error("Error saving routes file:", err);
     }

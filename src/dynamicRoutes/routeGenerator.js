@@ -18,7 +18,7 @@ const handleRestRequest = async (id, req, res, responseType, returnValue) => {
       return res.status(500).send("json parse error");
     }
 
-    const jsonData = clearData(item.response);
+    const jsonData = JSON.parse(JSON.stringify(clearData(item.response)));
     console.log("My response:", jsonData);
     if (shouldThrowError(responseType)) {
       return res.status(jsonData.errorStatus).json(jsonData.error);
