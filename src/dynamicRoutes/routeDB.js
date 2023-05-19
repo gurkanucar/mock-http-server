@@ -1,15 +1,5 @@
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
-require("dotenv").config();
-
-const APP_PREFIX = process.env.APP_PREFIX;
-
-const {
-  ApiType,
-  ResponseType,
-  HttpMethod,
-} = require("../helper/responseHelper");
-
 let routes = [];
 
 const convertEnumsToObjects = (routes) => {
@@ -70,10 +60,10 @@ const deleteRoute = async (routeId) => {
 };
 
 const updateRoute = async (id, data) => {
-  const index = routes.findIndex((route) => String(route.id) == id);
+  const index = routes.findIndex((route) => String(route.id) === id);
   if (index !== -1) {
     routes[index] = { ...data, id: id };
-    saveRoutes();
+    await saveRoutes();
   } else {
     throw new Error("not found!");
   }
