@@ -77,7 +77,6 @@ $(document).ready(function () {
       `);
       routesTableBody.append(row);
     });
-    
   };
 
   $("#routesTableBody").on("click", ".delete-button", function () {
@@ -124,45 +123,58 @@ $(document).ready(function () {
     fetchRoutes();
   });
 
-  const responseHelperButton = $("#responseHelper");
-  const setResponseBtn = $("#setResponseBtn");
-
-  responseHelperButton.on("click", function () {
-    $("#dialog").dialog();
+  $(document).ready(function () {
+    $("#responseHelper").click(function () {
+      $("#myModal").modal("show");
+      $("#successStatusInput").val("200");
+      $("#errorStatusInput").val("400");
+    });
   });
 
-  setResponseBtn.on("click", function () {
-    const successResponseInput = $("#successResponseInput").val();
-    const errorResponseInput = $("#errorResponseInput").val();
-    const successStatusInput = $("#successStatusInput").val();
-    const errorStatusInput = $("#errorStatusInput").val();
+  $(document).ready(function () {
+    const setResponseBtn = $("#setResponseBtn");
+    const successResponseInput = $("#successResponseInput");
+    const errorResponseInput = $("#errorResponseInput");
+    const successStatusInput = $("#successStatusInput");
+    const errorStatusInput = $("#errorStatusInput");
+    const responseInput = $("#response");
 
-    if (
-      successResponseInput === "" ||
-      errorResponseInput === "" ||
-      successStatusInput === "" ||
-      errorStatusInput === ""
-    ) {
-      alert("Please fill required fields.");
-      return;
-    }
+    setResponseBtn.on("click", function () {
+      const successResponse = successResponseInput.val();
+      const errorResponse = errorResponseInput.val();
+      const successStatus = successStatusInput.val();
+      const errorStatus = errorStatusInput.val();
 
-    console.log(
-      successResponseInput,
-      errorResponseInput,
-      successStatusInput,
-      errorStatusInput
-    );
+      if (
+        successResponse === "" ||
+        errorResponse === "" ||
+        successStatus === "" ||
+        errorStatus === ""
+      ) {
+        alert("Please fill in all the required fields.");
+        return;
+      }
 
-    $("#response").val(
-      JSON.stringify({
-        data: successResponseInput,
-        error: errorResponseInput,
-        successStatus: successStatusInput,
-        errorStatus: errorStatusInput,
-      })
-    );
+      console.log(successResponse, errorResponse, successStatus, errorStatus);
 
-    $("#dialog").dialog("close");
+      responseInput.val(
+        JSON.stringify({
+          data: successResponse,
+          error: errorResponse,
+          successStatus: successStatus,
+          errorStatus: errorStatus,
+        })
+      );
+
+      $("#myModal").modal("hide");
+    });
+
+    // Reset input fields when modal is closed
+    $("#myModal").on("hidden.bs.modal", function () {
+      successResponseInput.val("");
+      errorResponseInput.val("");
+      successStatusInput.val("");
+      errorStatusInput.val("");
+    });
   });
 });
