@@ -70,12 +70,14 @@ $(document).ready(function () {
         <td>${route.routePath}</td>
         <td>${route.responseType}</td>
         <td>${route.apiType}</td>
-        <td>
-          <button class="delete-button" data-route-id="${route.id}">Delete</button>
+        <td class="text-center" style="width: 220px;">
+          <button class="btn btn-danger delete-button mx-2" data-route-id="${route.id}">Delete</button>
+          <button class="btn btn-primary edit-button mx-2" data-route-id="${route.id}">Edit</button>
         </td>
       `);
       routesTableBody.append(row);
     });
+    
   };
 
   $("#routesTableBody").on("click", ".delete-button", function () {
