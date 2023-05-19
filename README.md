@@ -18,9 +18,9 @@
 
 ```
 
-### Response input format for REST:
+### Response format:
 
-- This response will show when you send a request. All REST responses must created by this format :
+- This response will return when you send a request:
 
 | Parameter       | Type     | Description                             |
 | :-------------- | :------- | :-------------------------------------- |
@@ -29,10 +29,9 @@
 | `successStatus` | `string` | **Required**.                           |
 | `errorStatus`   | `string` | **Required**.                           |
 
-```
 
 
-### If you want to add routes manually:
+## If you want to add routes manually:
 
 - Create a route in related file (restMock/soapMock):
 
