@@ -215,9 +215,14 @@ $(document).ready(function () {
 
       console.log(successResponse, errorResponse, successStatus, errorStatus);
 
+      try {
+        successResponse = JSON.parse(successResponse);
+        errorResponse = JSON.parse(errorResponse);
+      } catch {}
+
       const obj = {
-        data: JSON.parse(successResponse),
-        error: JSON.parse(errorResponse),
+        data: successResponse,
+        error: errorResponse,
         successStatus: Number(successStatus),
         errorStatus: Number(errorStatus),
       };

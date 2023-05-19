@@ -1,90 +1,64 @@
 require("dotenv").config();
 
 const APP_PREFIX = process.env.APP_PREFIX;
-
-const { clearData } = require("../helper/parser");
-const {
-  HttpMethod,
-  ApiType,
-  shouldThrowError,
-} = require("../helper/responseHelper");
+const { ApiType, shouldThrowError } = require("../helper/responseHelper");
 const { getByRouteId, loadResponses } = require("./responseDB");
 const { loadRoutes } = require("./routeDB");
 
-const handleRestRequest = async (id, req, res, responseType, returnValue) => {
+const handleRequest = async (
+  id,
+  req,
+  res,
+  responseType,
+  apiType,
+  returnValue
+) => {
+  res.set(
+    "Content-Type",
+    apiType == ApiType.REST ? "application/json" : "application/soap+xml"
+  );
   try {
     const item = await getByRouteId(id);
-    if (item == undefined) {
-      return res.status(500).send("json parse error");
+    if (!item) {
+      return res
+        .status(500)
+        .send(apiType == ApiType.REST ? "json parse error" : "soap error");
     }
-    const jsonData = JSON.parse(item.response.replace(/\\/g, ""));
-    console.log("My response:", jsonData);
+    const jsonData = JSON.parse(item.response.replace(/\\\\\\/g, ""));
+
     if (shouldThrowError(responseType)) {
-      return res.status(jsonData.errorStatus).json(jsonData.error);
+      return res.status(jsonData.errorStatus).send(jsonData.error);
     } else {
-      return res.status(jsonData.successStatus).json(jsonData.data);
+      return res.status(jsonData.successStatus).send(jsonData.data);
     }
   } catch (parseErr) {
     console.error(parseErr);
-    return res.status(500).send("json parse error");
+    return res
+      .status(500)
+      .send(apiType == ApiType.REST ? "json parse error" : "soap error");
   }
 };
 
 const setupRoutes = async (app) => {
-  app._router.stack = app._router.stack.filter((layer) => {
-    return !layer.route || !layer.route.path.startsWith(APP_PREFIX);
-  });
-
+  app._router.stack = app._router.stack.filter(
+    (layer) => !layer.route || !layer.route.path.startsWith(APP_PREFIX)
+  );
   loadResponses();
   const routes = await loadRoutes();
+
   routes.forEach((route) => {
     let { id, httpMethod, routePath, responseType, apiType, returnValue } =
       route;
     console.log(routePath);
     routePath = APP_PREFIX + routePath;
 
-    switch (httpMethod) {
-      case HttpMethod.GET:
-        app.get(routePath, (req, res) => {
-          if (apiType === ApiType.REST) {
-            console.log(routePath);
-            return handleRestRequest(id, req, res, responseType, returnValue);
-          }
-        });
-        break;
-      case HttpMethod.POST:
-        app.post(routePath, (req, res) => {
-          if (apiType === ApiType.REST) {
-            return handleRestRequest(id, req, res, responseType, returnValue);
-          }
-        });
-        break;
-      case HttpMethod.PUT:
-        app.put(routePath, (req, res) => {
-          if (apiType === ApiType.REST) {
-            return handleRestRequest(id, req, res, responseType, returnValue);
-          }
-        });
-        break;
-      case HttpMethod.PATCH:
-        app.patch(routePath, (req, res) => {
-          if (apiType === ApiType.REST) {
-            return handleRestRequest(id, req, res, responseType, returnValue);
-          }
-        });
-        break;
-      case HttpMethod.DELETE:
-        app.delete(routePath, (req, res) => {
-          if (apiType === ApiType.REST) {
-            return handleRestRequest(id, req, res, responseType, returnValue);
-          }
-        });
-        break;
-    }
+    app[httpMethod.toLowerCase()](routePath, (req, res) => {
+      return handleRequest(id, req, res, responseType, apiType, returnValue);
+    });
   });
 };
 
 module.exports = {
   setupRoutes,
-  handleRestRequest,
+  handleRequest,
 };
