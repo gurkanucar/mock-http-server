@@ -1,5 +1,5 @@
 const fs = require("fs");
-
+const { v4: uuidv4 } = require("uuid");
 let responses = [];
 
 const loadResponses = async () => {
@@ -33,8 +33,8 @@ const saveResponses = () => {
 };
 
 const addResponse = async (newResponse) => {
-  const lastResponse = responses[responses.length - 1];
-  const newId = lastResponse ? lastResponse.id + 1 : 1;
+  // const lastResponse = responses[responses.length - 1];
+  const newId = uuidv4(); // lastResponse ? lastResponse.id + 1 : 1;
   newResponse = {
     ...newResponse,
     id: newId,

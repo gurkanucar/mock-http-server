@@ -1,5 +1,5 @@
 const fs = require("fs");
-
+const { v4: uuidv4 } = require("uuid");
 require("dotenv").config();
 
 const APP_PREFIX = process.env.APP_PREFIX;
@@ -50,8 +50,8 @@ const saveRoutes = async () => {
 
 const addRoute = async (newRoute) => {
   console.log(newRoute);
-  const lastRoute = routes[routes.length - 1];
-  const newId = lastRoute ? lastRoute.id + 1 : 1;
+  //const lastRoute = routes[routes.length - 1];
+  const newId = uuidv4(); //lastRoute ? lastRoute.id + 1 : 1;
   newRoute = {
     ...newRoute,
     routePath: APP_PREFIX + newRoute.routePath,
