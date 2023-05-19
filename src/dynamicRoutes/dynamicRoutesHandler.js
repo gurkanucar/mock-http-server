@@ -1,5 +1,5 @@
 const express = require("express");
-const { loadRoutes, addRoute, deleteRoute } = require("./routeDB");
+const { loadRoutes, addRoute, deleteRoute, getById } = require("./routeDB");
 const { addResponse } = require("./responseDB");
 const { setupRoutes } = require("./routeGenerator");
 
@@ -30,5 +30,15 @@ module.exports = (app) => {
     await deleteRoute(routeId);
     await setupRoutes(app);
     res.sendStatus(200);
+  });
+
+  app.get("/routes/:id", express.json(), async (req, res) => {
+    const routeId = String(req.params.id);
+    try {
+      const result = await getById(routeId);
+      res.json(result);
+    } catch {
+      res.status(404).json({ message: "not found" });
+    }
   });
 };

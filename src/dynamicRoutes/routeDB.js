@@ -63,10 +63,6 @@ const addRoute = async (newRoute) => {
 };
 
 const deleteRoute = async (routeId) => {
-  console.log(
-    routeId,
-    routes.map((x) => x.id)
-  );
   const index = routes.findIndex((route) => String(route.id) === routeId);
   if (index !== -1) {
     routes.splice(index, 1);
@@ -82,10 +78,19 @@ const updateRoute = async (updatedRoute) => {
   }
 };
 
+const getById = async (routeId) => {
+  const index = routes.find((route) => String(route.id) === routeId);
+  if (index !== undefined) {
+    return index;
+  }
+  throw new Error("not found!");
+};
+
 module.exports = {
   addRoute,
   saveRoutes,
   deleteRoute,
   updateRoute,
   loadRoutes,
+  getById,
 };
