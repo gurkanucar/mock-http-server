@@ -5,7 +5,7 @@
     "id": 1
   },
   {
-    "response": "{\"data\":{\"id\":1,\"username\":\"grkn\"},\"error\":{\"message\":\"my custom error\"},\"successStatus\":200,\"errorStatus\":400}",
+    "response": "{\"data\":\"<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>     <soap:Body>         <users>             <user>                 <id>1</id>                 <name>grkn</name>             </user>             <user>                 <id>2</id>                 <name>ali</name>             </user>             <user>                 <id>3</id>                 <name>veli</name>             </user>         </users>     </soap:Body> </soap:Envelope>\",\"error\":\"<env:Envelope  xmlns:env=\\\"http://www.w3.org/2001/12/soap-envelope\\\" >     <env:Body>         <env:Fault>            <env:Code>             <env:Value>env:Sender</env:Value>           </env:Code>            <env:Reason>             <env:Text xml:lang=\\\"en-US\\\">Processing error</env:Text>             <env:Text xml:lang=\\\"da\\\">Processerings-fejl</env:Text>           </env:Reason>          </env:Fault>     </env:Body> </env:Envelope>\",\"successStatus\":200,\"errorStatus\":400}",
     "routeId": 1,
     "id": 2
   },
