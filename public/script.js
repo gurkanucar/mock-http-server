@@ -56,9 +56,11 @@ $(document).ready(function () {
       type: "PUT",
       contentType: "application/json",
       data: JSON.stringify(updatedRoute),
-      success: () => {},
-      error: () => {
-        console.error("Error updating route.");
+      success: () => {
+        console.log("Route updated successfully.");
+      },
+      error: (e) => {
+        console.error("Error updating route.", e);
       },
     });
   };
@@ -150,7 +152,7 @@ $(document).ready(function () {
     $("#routePath").val(route.routePath);
     $("#responseType").val(route.responseType);
     $("#apiType").val(route.apiType);
-    $("#response").val(route.responseData);
+    $("#response").val(JSON.stringify(route.responseData));
   };
 
   const populateSelectOptions = (selectElement, options) => {

@@ -1,6 +1,12 @@
 const express = require("express");
-const { loadRoutes, addRoute, deleteRoute, getById } = require("./routeDB");
-const { addResponse } = require("./responseDB");
+const {
+  loadRoutes,
+  addRoute,
+  deleteRoute,
+  getById,
+  updateRoute,
+} = require("./routeDB");
+const { addResponse, getByRouteId, updateResponse } = require("./responseDB");
 const { setupRoutes } = require("./routeGenerator");
 
 module.exports = (app) => {
@@ -36,7 +42,24 @@ module.exports = (app) => {
     const routeId = String(req.params.id);
     try {
       const result = await getById(routeId);
+      const responseData = await getByRouteId(routeId);
+      result.responseData = responseData;
       res.json(result);
+    } catch {
+      res.status(404).json({ message: "not found" });
+    }
+  });
+
+  app.put("/routes/:id", express.json(), async (req, res) => {
+    const routeId = String(req.params.id);
+    try {
+      await updateRoute(routeId, req.body);
+      await updateResponse({
+        response: req.body.responseData,
+        routeId: routeId,
+      });
+      await setupRoutes(app);
+      res.status(200).json({ message: "successfully update!" });
     } catch {
       res.status(404).json({ message: "not found" });
     }

@@ -70,11 +70,15 @@ const deleteRoute = async (routeId) => {
   }
 };
 
-const updateRoute = async (updatedRoute) => {
-  const index = routes.findIndex((route) => route.id === updatedRoute.id);
+const updateRoute = async (id, data) => {
+  console.log("Update start", data);
+  const index = routes.findIndex((route) => String(route.id) == id);
   if (index !== -1) {
-    routes[index] = updatedRoute;
+    routes[index] = { ...data, id: id };
+    console.log("updated", routes[index]);
     saveRoutes();
+  } else {
+    throw new Error("not found!");
   }
 };
 

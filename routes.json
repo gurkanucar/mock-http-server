@@ -3,7 +3,7 @@
     "id": 1,
     "routeName": "user",
     "httpMethod": "GET",
-    "routePath": "/mock/api/user",
+    "routePath": "/api/user",
     "responseType": "RETURN_ERROR",
     "apiType": "REST"
   },
@@ -11,7 +11,7 @@
     "id": 2,
     "routeName": "userById",
     "httpMethod": "GET",
-    "routePath": "/mock/api/user/:id",
+    "routePath": "/api/user/:id",
     "responseType": "SUCCESS",
     "apiType": "REST"
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "routeName": "userCreate",
     "httpMethod": "POST",
-    "routePath": "/mock/api/user",
+    "routePath": "/api/user",
     "responseType": "RANDOM_ERROR",
     "apiType": "REST"
   },
@@ -27,16 +27,16 @@
     "id": 4,
     "routeName": "userList",
     "httpMethod": "GET",
-    "routePath": "/mock/api/users",
+    "routePath": "/api/users",
     "responseType": "RANDOM_ERROR",
     "apiType": "REST"
   },
   {
     "routeName": "userCreate",
     "httpMethod": "GET",
-    "routePath": "/mock/sa",
+    "routePath": "/sa",
     "responseType": "RANDOM_ERROR",
     "apiType": "REST",
-    "id": 5
+    "id": "5"
   }
 ]

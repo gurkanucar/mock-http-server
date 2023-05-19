@@ -39,9 +39,10 @@ const setupRoutes = async (app) => {
   loadResponses();
   const routes = await loadRoutes();
   routes.forEach((route) => {
-    const { id, httpMethod, routePath, responseType, apiType, returnValue } =
+    let { id, httpMethod, routePath, responseType, apiType, returnValue } =
       route;
     console.log(routePath);
+    routePath = APP_PREFIX + routePath;
 
     switch (httpMethod) {
       case HttpMethod.GET:
