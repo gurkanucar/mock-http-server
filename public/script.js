@@ -1,5 +1,33 @@
+const setSelectOptions = (selectElement, options) => {
+  options.forEach((option) => {
+    const optionElement = $("<option></option>");
+    optionElement.val(option);
+    optionElement.text(option);
+    selectElement.append(optionElement);
+  });
+};
+
+$(document).ready(function () {
+  const httpMethodSelect = $("#httpMethod");
+  const responseTypeSelect = $("#responseType");
+  const apiTypeSelect = $("#apiType");
+
+  const httpMethodOptions = ["GET", "POST", "PUT", "PATCH", "DELETE"];
+  setSelectOptions(httpMethodSelect, httpMethodOptions);
+
+  const responseTypeOptions = ["RANDOM_ERROR", "RETURN_ERROR", "SUCCESS"];
+  setSelectOptions(responseTypeSelect, responseTypeOptions);
+
+  const apiTypeOptions = ["REST", "SOAP"];
+  setSelectOptions(apiTypeSelect, apiTypeOptions);
+});
+
 $(document).ready(function () {
   const addRouteForm = $("#addRouteForm");
+
+  $("#clearBtn").on("click", function () {
+    addRouteForm.trigger("reset");
+  });
 
   addRouteForm.on("submit", function (event) {
     event.preventDefault();
@@ -25,7 +53,10 @@ $(document).ready(function () {
     const routePath = $("#routePath").val();
     const responseType = $("#responseType").val();
     const apiType = $("#apiType").val();
-    const responseData = $("#response").val();
+    const successResponse = $("#successResponse").val();
+    const errorResponse = $("#errorResponse").val();
+    const successStatus = $("#successStatus").val();
+    const errorStatus = $("#errorStatus").val();
 
     return {
       routeName,
@@ -33,13 +64,16 @@ $(document).ready(function () {
       routePath,
       responseType,
       apiType,
-      responseData,
+      successResponse,
+      errorResponse,
+      successStatus,
+      errorStatus,
     };
   };
 
   const addRoute = (newRoute) => {
     $.ajax({
-      url: "/routes",
+      url: "/route",
       type: "POST",
       contentType: "application/json",
       data: JSON.stringify(newRoute),
@@ -52,7 +86,7 @@ $(document).ready(function () {
 
   const updateRoute = (routeId, updatedRoute) => {
     $.ajax({
-      url: `/routes/${routeId}`,
+      url: `/route/${routeId}`,
       type: "PUT",
       contentType: "application/json",
       data: JSON.stringify(updatedRoute),
@@ -67,7 +101,7 @@ $(document).ready(function () {
 
   const fetchRoutes = () => {
     $.ajax({
-      url: "/routes",
+      url: "/route",
       type: "GET",
       success: (routes) => {
         renderRoutesTable(routes);
@@ -108,7 +142,6 @@ $(document).ready(function () {
     const routeId = $(this).data("route-id");
     deleteRoute(routeId);
   });
-
   $("#routesTableBody").on("click", ".edit-button", function () {
     const routeId = $(this).data("route-id");
     const route = getRouteById(routeId);
@@ -121,131 +154,47 @@ $(document).ready(function () {
 
   const deleteRoute = (routeId) => {
     $.ajax({
-      url: `/routes/${routeId}`,
+      url: `/route/${routeId}`,
       type: "DELETE",
-      success: function () {
+      success: () => {
+        console.log("Route deleted successfully.");
         fetchRoutes();
       },
-      error: function () {
-        console.error("Error deleting route.");
+      error: (e) => {
+        console.error("Error deleting route.", e);
       },
     });
   };
 
   const getRouteById = (routeId) => {
+    let route;
     $.ajax({
-      url: `/routes/${routeId}`,
+      url: `/route/${routeId}`, // Use the correct endpoint
       type: "GET",
-      success: function (route) {
-        populateUpdateForm(route);
+      async: false,
+      success: (response) => {
+        route = response;
       },
-      error: function () {
-        console.error("Error retrieving route.");
+      error: (e) => {
+        console.error("Error getting route by ID.", e);
       },
     });
+    return route;
   };
 
   const populateUpdateForm = (route) => {
-    addRouteForm.data("route-id", route.id);
     $("#routeName").val(route.routeName);
     $("#httpMethod").val(route.httpMethod);
     $("#routePath").val(route.routePath);
     $("#responseType").val(route.responseType);
     $("#apiType").val(route.apiType);
-    $("#response").val(route.responseData.replace(/\\/g, ""));
+    $("#successResponse").val(route.successResponse);
+    $("#errorResponse").val(route.errorResponse);
+    $("#successStatus").val(route.successStatus);
+    $("#errorStatus").val(route.errorStatus);
+
+    addRouteForm.data("route-id", route.id);
   };
 
-  const populateSelectOptions = (selectElement, options) => {
-    options.forEach((option) => {
-      const optionElement = $("<option></option>");
-      optionElement.val(option);
-      optionElement.text(option);
-      selectElement.append(optionElement);
-    });
-  };
-
-  $(document).ready(function () {
-    const httpMethodSelect = $("#httpMethod");
-    const responseTypeSelect = $("#responseType");
-    const apiTypeSelect = $("#apiType");
-
-    const httpMethodOptions = ["GET", "POST", "PUT", "PATCH", "DELETE"];
-    populateSelectOptions(httpMethodSelect, httpMethodOptions);
-
-    const responseTypeOptions = ["RANDOM_ERROR", "RETURN_ERROR", "SUCCESS"];
-    populateSelectOptions(responseTypeSelect, responseTypeOptions);
-
-    const apiTypeOptions = ["REST", "SOAP"];
-    populateSelectOptions(apiTypeSelect, apiTypeOptions);
-
-    fetchRoutes();
-  });
-
-  $(document).ready(function () {
-    $("#responseHelper").click(function () {
-      $("#myModal").modal("show");
-      $("#successStatusInput").val("200");
-      $("#errorStatusInput").val("400");
-    });
-  });
-
-  $(document).ready(function () {
-    const setResponseBtn = $("#setResponseBtn");
-    const successResponseInput = $("#successResponseInput");
-    const errorResponseInput = $("#errorResponseInput");
-    const successStatusInput = $("#successStatusInput");
-    const errorStatusInput = $("#errorStatusInput");
-    const responseInput = $("#response");
-
-    setResponseBtn.on("click", function () {
-      const successResponse = successResponseInput.val();
-      const errorResponse = errorResponseInput.val();
-      const successStatus = successStatusInput.val();
-      const errorStatus = errorStatusInput.val();
-
-      if (
-        successResponse === "" ||
-        errorResponse === "" ||
-        successStatus === "" ||
-        errorStatus === ""
-      ) {
-        alert("Please fill in all the required fields.");
-        return;
-      }
-
-      console.log(successResponse, errorResponse, successStatus, errorStatus);
-
-      try {
-        successResponse = JSON.parse(successResponse);
-        errorResponse = JSON.parse(errorResponse);
-      } catch {}
-
-      const obj = {
-        data: successResponse,
-        error: errorResponse,
-        successStatus: Number(successStatus),
-        errorStatus: Number(errorStatus),
-      };
-
-      const jsonString = JSON.stringify(obj);
-
-      responseInput.val(jsonString);
-
-      $("#myModal").modal("hide");
-    });
-
-    $("#myModal").on("hidden.bs.modal", function () {
-      successResponseInput.val("");
-      errorResponseInput.val("");
-      successStatusInput.val("");
-      errorStatusInput.val("");
-    });
-  });
-
-  $("#clearBtn").click(function () {
-    addRouteForm.trigger("reset");
-    addRouteForm.removeData("route-id");
-    $("#addRouteBtn").show();
-    $("#updateRouteBtn").hide();
-  });
+  fetchRoutes();
 });
