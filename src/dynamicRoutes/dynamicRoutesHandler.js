@@ -25,7 +25,7 @@ module.exports = (app) => {
 
     const id = await addRoute(rest);
     await addResponse({
-      response: JSON.stringify(clearData(newRoute.responseData)),
+      response: newRoute.responseData,
       routeId: id,
     });
     await setupRoutes(app);

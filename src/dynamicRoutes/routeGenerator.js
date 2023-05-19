@@ -17,8 +17,7 @@ const handleRestRequest = async (id, req, res, responseType, returnValue) => {
     if (item == undefined) {
       return res.status(500).send("json parse error");
     }
-
-    const jsonData = JSON.parse(JSON.stringify(clearData(item.response)));
+    const jsonData = JSON.parse(item.response.replace(/\\/g, ""));
     console.log("My response:", jsonData);
     if (shouldThrowError(responseType)) {
       return res.status(jsonData.errorStatus).json(jsonData.error);

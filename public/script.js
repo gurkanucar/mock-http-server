@@ -152,7 +152,7 @@ $(document).ready(function () {
     $("#routePath").val(route.routePath);
     $("#responseType").val(route.responseType);
     $("#apiType").val(route.apiType);
-    $("#response").val(JSON.stringify(route.responseData));
+    $("#response").val(route.responseData.replace(/\\/g, ""));
   };
 
   const populateSelectOptions = (selectElement, options) => {
@@ -215,14 +215,16 @@ $(document).ready(function () {
 
       console.log(successResponse, errorResponse, successStatus, errorStatus);
 
-      responseInput.val(
-        JSON.stringify({
-          data: successResponse,
-          error: errorResponse,
-          successStatus: successStatus,
-          errorStatus: errorStatus,
-        })
-      );
+      const obj = {
+        data: JSON.parse(successResponse),
+        error: JSON.parse(errorResponse),
+        successStatus: Number(successStatus),
+        errorStatus: Number(errorStatus),
+      };
+
+      const jsonString = JSON.stringify(obj);
+
+      responseInput.val(jsonString);
 
       $("#myModal").modal("hide");
     });

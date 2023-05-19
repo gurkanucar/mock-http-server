@@ -68,9 +68,7 @@ const updateResponse = async (updatedResponse) => {
     (route) => String(route.routeId) == updatedResponse.routeId
   );
   if (index !== -1) {
-    responses[index].response = JSON.stringify(
-      clearData(updatedResponse.response)
-    );
+    responses[index].response = updatedResponse.response;
     saveResponses();
   } else {
     throw new Error("something went wrong!");
