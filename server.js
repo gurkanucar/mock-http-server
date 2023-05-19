@@ -26,8 +26,8 @@ require("./src/dynamicRoutes/dynamicRoutesHandler")(app);
 
 setupRoutes(app);
 
-// require("./src/rest/api/restMock")(app);
-// require("./src/soap/api/soapMock")(app);
+require("./src/rest/api/restMock")(app);
+require("./src/soap/api/soapMock")(app);
 
 // ****** RabbitMQ ********** //
 

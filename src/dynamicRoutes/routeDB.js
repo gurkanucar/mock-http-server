@@ -1,6 +1,10 @@
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
-const { HttpMethod, ResponseType, ApiType } = require("../helper/responseHelper");
+const {
+  HttpMethod,
+  ResponseType,
+  ApiType,
+} = require("../helper/responseHelper");
 let routes = [];
 
 const convertEnumsToObjects = (routes) => {
@@ -40,11 +44,9 @@ const saveRoutes = async () => {
 };
 
 const addRoute = async (newRoute) => {
-  console.log(newRoute);
   const newId = uuidv4();
   newRoute = {
     ...newRoute,
-    routePath: newRoute.routePath,
     id: newId,
   };
   routes.push(newRoute);

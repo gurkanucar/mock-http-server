@@ -1,42 +1,39 @@
 [
   {
-    "routeName": "user",
+    "routeName": "qweqwe",
     "httpMethod": "GET",
-    "routePath": "/api/user",
+    "routePath": "/api/a",
     "responseType": "RANDOM_ERROR",
     "apiType": "SOAP",
-    "id": "1"
+    "successResponse": "      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>",
+    "errorResponse": "      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>",
+    "successStatus": "200",
+    "errorStatus": "400",
+    "id": "52c42c56-63f4-4b27-8623-1ee397f19be2"
   },
   {
-    "id": 2,
-    "routeName": "userById",
+    "routeName": "qweqwe",
+    "routePath": "/api/my2",
+    "apiType": "SOAP",
     "httpMethod": "GET",
-    "routePath": "/api/user/:id",
-    "responseType": "SUCCESS",
-    "apiType": "REST"
-  },
-  {
-    "id": 3,
-    "routeName": "userCreate",
-    "httpMethod": "POST",
-    "routePath": "/api/user",
     "responseType": "RANDOM_ERROR",
-    "apiType": "REST"
+    "delay": "0",
+    "successStatus": "200",
+    "successResponse": "      \r\n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\r\n    <soap:Body>\r\n        <users>\r\n            <user>\r\n                <id>1</id>\r\n                <name>grkn</name>\r\n            </user>\r\n            <user>\r\n                <id>2</id>\r\n                <name>ali</name>\r\n            </user>\r\n            <user>\r\n                <id>3</id>\r\n                <name>veli</name>\r\n            </user>\r\n        </users>\r\n    </soap:Body>\r\n</soap:Envelope>",
+    "errorStatus": "400",
+    "errorResponse": "      \r\n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\r\n    <soap:Body>\r\n        <users>\r\n            <user>\r\n                <id>1</id>\r\n                <name>grkn</name>\r\n            </user>\r\n            <user>\r\n                <id>2</id>\r\n                <name>ali</name>\r\n            </user>\r\n            <user>\r\n                <id>3</id>\r\n                <name>veli</name>\r\n            </user>\r\n        </users>\r\n    </soap:Body>\r\n</soap:Envelope>",
+    "id": "5ca4f2e5-b3ab-4459-a03e-01697e939e42"
   },
   {
-    "id": 4,
-    "routeName": "userList",
+    "routeName": "create review",
     "httpMethod": "GET",
-    "routePath": "/api/users",
-    "responseType": "RANDOM_ERROR",
-    "apiType": "REST"
-  },
-  {
-    "routeName": "userCreate",
-    "httpMethod": "GET",
-    "routePath": "/sa",
+    "routePath": "/api/review",
     "responseType": "RANDOM_ERROR",
     "apiType": "REST",
-    "id": "5"
+    "successResponse": "{\n    \"userId\":5 ,\n    \"requestUser\": {\n        \"userId\": 1\n    },\n    \"restaurantId\": 2,\n    \"star\": 1,\n    \"content\": \"superdi\"\n}",
+    "errorResponse": "{\n    \"message\": \"error from mock\"\n}",
+    "successStatus": "200",
+    "errorStatus": "400",
+    "id": "43c687a9-d258-442d-be15-2125e3008c53"
   }
 ]
