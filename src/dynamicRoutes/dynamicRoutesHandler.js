@@ -8,6 +8,7 @@ const {
 } = require("./routeDB");
 const { addResponse, getByRouteId, updateResponse } = require("./responseDB");
 const { setupRoutes } = require("./routeGenerator");
+const { clearData } = require("../helper/parser");
 
 module.exports = (app) => {
   app.get("/routes", express.json(), async (req, res) => {
@@ -24,7 +25,7 @@ module.exports = (app) => {
 
     const id = await addRoute(rest);
     await addResponse({
-      response: newRoute.responseData,
+      response: clearData(newRoute.responseData),
       routeId: id,
     });
     await setupRoutes(app);
@@ -43,7 +44,7 @@ module.exports = (app) => {
     try {
       const result = await getById(routeId);
       const responseData = await getByRouteId(routeId);
-      result.responseData = responseData;
+      result.responseData = responseData.response;
       res.json(result);
     } catch {
       res.status(404).json({ message: "not found" });
@@ -52,10 +53,17 @@ module.exports = (app) => {
 
   app.put("/routes/:id", express.json(), async (req, res) => {
     const routeId = String(req.params.id);
+
+    const newRoute = req.body;
+
+    const removeProp = "responseData";
+
+    const { [removeProp]: responseData, ...rest } = newRoute;
+
     try {
-      await updateRoute(routeId, req.body);
+      await updateRoute(routeId, rest);
       await updateResponse({
-        response: req.body.responseData,
+        response: responseData,
         routeId: routeId,
       });
       await setupRoutes(app);

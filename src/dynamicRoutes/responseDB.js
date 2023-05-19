@@ -1,5 +1,6 @@
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
+const { clearData } = require("../helper/parser");
 let responses = [];
 
 const loadResponses = async () => {
@@ -54,11 +55,15 @@ const deleteResponse = (responseId) => {
   }
 };
 
-const updateResponse = (updatedResponse) => {
-  const index = responses.findIndex((route) => route.id === updatedResponse.id);
+const updateResponse = async (updatedResponse) => {
+  const index = responses.findIndex(
+    (route) => String(route.routeId) == updatedResponse.routeId
+  );
   if (index !== -1) {
-    responses[index] = updatedResponse;
+    responses[index].response = clearData(updatedResponse.response);
     saveResponses();
+  } else {
+    throw new Error("something went wrong!");
   }
 };
 

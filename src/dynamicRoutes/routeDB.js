@@ -50,11 +50,10 @@ const saveRoutes = async () => {
 
 const addRoute = async (newRoute) => {
   console.log(newRoute);
-  //const lastRoute = routes[routes.length - 1];
-  const newId = uuidv4(); //lastRoute ? lastRoute.id + 1 : 1;
+  const newId = uuidv4();
   newRoute = {
     ...newRoute,
-    routePath: APP_PREFIX + newRoute.routePath,
+    routePath: newRoute.routePath,
     id: newId,
   };
   routes.push(newRoute);
@@ -71,11 +70,9 @@ const deleteRoute = async (routeId) => {
 };
 
 const updateRoute = async (id, data) => {
-  console.log("Update start", data);
   const index = routes.findIndex((route) => String(route.id) == id);
   if (index !== -1) {
     routes[index] = { ...data, id: id };
-    console.log("updated", routes[index]);
     saveRoutes();
   } else {
     throw new Error("not found!");
