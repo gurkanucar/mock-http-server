@@ -4,7 +4,17 @@ $(document).ready(function () {
   addRouteForm.on("submit", function (event) {
     event.preventDefault();
     const newRoute = getFormData();
-    addRoute(newRoute);
+
+    const routeId = addRouteForm.data("route-id");
+    if (routeId) {
+      updateRoute(routeId, newRoute);
+      addRouteForm.removeData("route-id");
+      $("#addRouteBtn").show();
+      $("#updateRouteBtn").hide();
+    } else {
+      addRoute(newRoute);
+    }
+
     fetchRoutes();
     addRouteForm.trigger("reset");
   });
@@ -36,6 +46,19 @@ $(document).ready(function () {
       success: () => {},
       error: () => {
         console.error("Error adding route.");
+      },
+    });
+  };
+
+  const updateRoute = (routeId, updatedRoute) => {
+    $.ajax({
+      url: `/routes/${routeId}`,
+      type: "PUT",
+      contentType: "application/json",
+      data: JSON.stringify(updatedRoute),
+      success: () => {},
+      error: () => {
+        console.error("Error updating route.");
       },
     });
   };
@@ -84,6 +107,16 @@ $(document).ready(function () {
     deleteRoute(routeId);
   });
 
+  $("#routesTableBody").on("click", ".edit-button", function () {
+    const routeId = $(this).data("route-id");
+    const route = getRouteById(routeId);
+    if (route) {
+      populateUpdateForm(route);
+      $("#addRouteBtn").hide();
+      $("#updateRouteBtn").show();
+    }
+  });
+
   const deleteRoute = (routeId) => {
     $.ajax({
       url: `/routes/${routeId}`,
@@ -95,6 +128,29 @@ $(document).ready(function () {
         console.error("Error deleting route.");
       },
     });
+  };
+
+  const getRouteById = (routeId) => {
+    $.ajax({
+      url: `/routes/${routeId}`,
+      type: "GET",
+      success: function (route) {
+        populateUpdateForm(route);
+      },
+      error: function () {
+        console.error("Error retrieving route.");
+      },
+    });
+  };
+
+  const populateUpdateForm = (route) => {
+    addRouteForm.data("route-id", route.id);
+    $("#routeName").val(route.routeName);
+    $("#httpMethod").val(route.httpMethod);
+    $("#routePath").val(route.routePath);
+    $("#responseType").val(route.responseType);
+    $("#apiType").val(route.apiType);
+    $("#response").val(route.responseData);
   };
 
   const populateSelectOptions = (selectElement, options) => {
@@ -169,12 +225,18 @@ $(document).ready(function () {
       $("#myModal").modal("hide");
     });
 
-   
     $("#myModal").on("hidden.bs.modal", function () {
       successResponseInput.val("");
       errorResponseInput.val("");
       successStatusInput.val("");
       errorStatusInput.val("");
     });
+  });
+
+  $("#clearBtn").click(function () {
+    addRouteForm.trigger("reset");
+    addRouteForm.removeData("route-id");
+    $("#addRouteBtn").show();
+    $("#updateRouteBtn").hide();
   });
 });
