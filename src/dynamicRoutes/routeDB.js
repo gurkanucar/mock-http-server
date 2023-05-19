@@ -63,7 +63,11 @@ const addRoute = async (newRoute) => {
 };
 
 const deleteRoute = async (routeId) => {
-  const index = routes.findIndex((route) => route.id === routeId);
+  console.log(
+    routeId,
+    routes.map((x) => x.id)
+  );
+  const index = routes.findIndex((route) => String(route.id) === routeId);
   if (index !== -1) {
     routes.splice(index, 1);
     await saveRoutes();

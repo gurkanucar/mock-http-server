@@ -26,7 +26,7 @@ module.exports = (app) => {
   });
 
   app.delete("/routes/:id", express.json(), async (req, res) => {
-    const routeId = parseInt(req.params.id);
+    const routeId = String(req.params.id);
     await deleteRoute(routeId);
     await setupRoutes(app);
     res.sendStatus(200);

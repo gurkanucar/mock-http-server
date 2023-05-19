@@ -45,7 +45,9 @@ const addResponse = async (newResponse) => {
 };
 
 const deleteResponse = (responseId) => {
-  const index = responses.findIndex((response) => response.id === responseId);
+  const index = responses.findIndex(
+    (response) => String(response.id) === responseId
+  );
   if (index !== -1) {
     responses.splice(index, 1);
     saveResponses();

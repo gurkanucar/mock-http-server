@@ -169,7 +169,7 @@ $(document).ready(function () {
       $("#myModal").modal("hide");
     });
 
-    // Reset input fields when modal is closed
+   
     $("#myModal").on("hidden.bs.modal", function () {
       successResponseInput.val("");
       errorResponseInput.val("");
