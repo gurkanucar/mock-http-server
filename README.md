@@ -16,8 +16,6 @@
     npm i
     node server.js
 
-    # rabbitmq docker run
-    docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.11-management
 ```
 
 ### Response input format for REST:
@@ -32,32 +30,9 @@
 | `errorStatus`   | `string` | **Required**.                           |
 
 ```
-{
-  "data": [
-    {
-      "id": 1,
-      "username": "grkn"
-    },
-    {
-      "id": 2,
-      "username": "ali"
-    },
-    {
-      "id": 3,
-      "username": "veli"
-    }
-  ],
-  "error": {
-    "code": "400",
-    "message": "something went wrong"
-  },
-  "successStatus": 201,
-  "errorStatus": 400
-}
 
-```
 
-### Usage:
+### If you want to add routes manually:
 
 - Create a route in related file (restMock/soapMock):
 
