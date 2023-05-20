@@ -147,14 +147,22 @@ $(document).ready(function () {
       const rabbitActionData = retrieveRabbitActionData();
       console.log(rabbitActionData);
       saveRabbitAction(routeId, rabbitActionData);
-      $("#rabbitActionModal").modal("hide");
+      setTimeout(() => {
+        location.reload();
+      }, 200);
+
+      // $("#rabbitActionModal").modal("hide");
     });
 
     $("#deleteRabbitAction").on("click", function () {
       const rabbitActionData = retrieveRabbitActionData();
       console.log(rabbitActionData);
       deleteRabbitAction(routeId, rabbitActionData);
-      $("#rabbitActionModal").modal("hide");
+      setTimeout(() => {
+        location.reload();
+      }, 200);
+
+      // $("#rabbitActionModal").modal("hide");
     });
   });
 

@@ -1,4 +1,3 @@
-
 const rabbitActionSupport = () => {
   let isSupport;
   $.ajax({
@@ -14,8 +13,6 @@ const rabbitActionSupport = () => {
   });
   return isSupport;
 };
-
-
 
 const fetchRoutes = () => {
   $.ajax({
@@ -98,10 +95,11 @@ const getRouteById = (routeId) => {
   return route;
 };
 
-const saveRabbitAction = (routeId, rabbitAction) => {
+const saveRabbitAction = async (routeId, rabbitAction) => {
   $.ajax({
     url: `/rabbit-action/${routeId}`,
     type: "POST",
+    async: false,
     contentType: "application/json",
     data: JSON.stringify(rabbitAction),
     success: () => {},
@@ -111,10 +109,11 @@ const saveRabbitAction = (routeId, rabbitAction) => {
   });
 };
 
-const deleteRabbitAction = (routeId, rabbitAction) => {
+const deleteRabbitAction = async (routeId, rabbitAction) => {
   $.ajax({
     url: `/rabbit-action/${routeId}`,
     type: "DELETE",
+    async: false,
     contentType: "application/json",
     data: JSON.stringify(rabbitAction),
     success: () => {},
