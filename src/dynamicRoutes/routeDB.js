@@ -30,14 +30,30 @@ const loadRoutes = async () => {
 
     await new Promise((resolve) => setTimeout(resolve, 300));
 
-    await fileLock.lock(lockfilePath);
+    let retryCount = 0;
+    let isLocked = false;
+    let routesData = null;
 
-    if (!fs.existsSync("data/routes.json")) {
-      fs.writeFileSync("data/routes.json", "[]");
-      console.log("data/routes.json file created.");
+    while (retryCount < 5) {
+      try {
+        await fileLock.lock(lockfilePath);
+        isLocked = true;
+        if (!fs.existsSync("data/routes.json")) {
+          fs.writeFileSync("data/routes.json", "[]");
+          console.log("data/routes.json file created.");
+        }
+        routesData = await fs.promises.readFile("data/routes.json", "utf8");
+        break;
+      } catch (err) {
+        retryCount++;
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
     }
 
-    const routesData = await fs.promises.readFile("data/routes.json", "utf8");
+    if (!isLocked) {
+      return [];
+    }
+
     const tempRoutes = JSON.parse(routesData);
     routes = convertEnumsToObjects(tempRoutes);
 
@@ -45,7 +61,6 @@ const loadRoutes = async () => {
 
     return routes;
   } catch (err) {
-    console.error("Error reading routes file:", err);
     return [];
   }
 };
