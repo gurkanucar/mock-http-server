@@ -1,3 +1,22 @@
+
+const rabbitActionSupport = () => {
+  let isSupport;
+  $.ajax({
+    url: "/rabbit-action-support",
+    type: "GET",
+    async: false,
+    success: (response) => {
+      isSupport = response.support;
+    },
+    error: (e) => {
+      console.error("Error getting rabbit support result.", e);
+    },
+  });
+  return isSupport;
+};
+
+
+
 const fetchRoutes = () => {
   $.ajax({
     url: "/prefix",
@@ -77,4 +96,30 @@ const getRouteById = (routeId) => {
     },
   });
   return route;
+};
+
+const saveRabbitAction = (routeId, rabbitAction) => {
+  $.ajax({
+    url: `/rabbit-action/${routeId}`,
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(rabbitAction),
+    success: () => {},
+    error: () => {
+      console.error("Error adding rabbit action.");
+    },
+  });
+};
+
+const deleteRabbitAction = (routeId, rabbitAction) => {
+  $.ajax({
+    url: `/rabbit-action/${routeId}`,
+    type: "DELETE",
+    contentType: "application/json",
+    data: JSON.stringify(rabbitAction),
+    success: () => {},
+    error: () => {
+      console.error("Error deleting rabbit action.");
+    },
+  });
 };

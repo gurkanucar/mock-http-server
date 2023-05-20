@@ -10,13 +10,13 @@
     />
   </head>
   <body>
-    <button id="responseHelper">modal</button>
-
     <div id="rabbitActionModal" class="modal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="rabbitActionModalTitle" class="modal-title">Rabbit Action Title</h5>
+            <h5 id="rabbitActionModalTitle" class="modal-title">
+              Rabbit Action Title
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -32,24 +32,32 @@
               <option value="topic_exchange">Topic Exchange</option>
               <option value="header_exchange">Header Exchange</option>
             </select>
-    
+
             <label for="queueName">Queue Name</label>
             <input type="text" id="queueName" required class="form-control" />
-    
+
             <label for="routingKey">Routing Key</label>
             <input type="text" id="routingKey" required class="form-control" />
-    
+
             <label for="message">Message</label>
             <input type="text" id="message" required class="form-control" />
-    
+
             <label for="headers">Headers</label>
             <textarea id="headers" class="form-control" rows="3"></textarea>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
               Cancel
             </button>
-            <button type="button" id="deleteRabbitAction" class="btn btn-danger">
+            <button
+              type="button"
+              id="deleteRabbitAction"
+              class="btn btn-danger"
+            >
               Delete Rabbit Action
             </button>
             <button type="button" id="saveRabbitAction" class="btn btn-primary">
@@ -59,7 +67,6 @@
         </div>
       </div>
     </div>
-    
 
     <div class="container">
       <h2 class="text-center mt-3">Mock API</h2>
