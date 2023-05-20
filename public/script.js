@@ -143,27 +143,23 @@ $(document).ready(function () {
 
     $("#rabbitActionModal").modal("show");
 
-    $("#saveRabbitAction").on("click", function () {
-      const rabbitActionData = retrieveRabbitActionData();
-      console.log(rabbitActionData);
-      saveRabbitAction(routeId, rabbitActionData);
-      setTimeout(() => {
-        location.reload();
-      }, 200);
+    $("#saveRabbitAction")
+      .off("click")
+      .on("click", function () {
+        const rabbitActionData = retrieveRabbitActionData();
+        console.log(rabbitActionData);
+        saveRabbitAction(routeId, rabbitActionData);
+        $("#rabbitActionModal").modal("hide");
+      });
 
-      // $("#rabbitActionModal").modal("hide");
-    });
-
-    $("#deleteRabbitAction").on("click", function () {
-      const rabbitActionData = retrieveRabbitActionData();
-      console.log(rabbitActionData);
-      deleteRabbitAction(routeId, rabbitActionData);
-      setTimeout(() => {
-        location.reload();
-      }, 200);
-
-      // $("#rabbitActionModal").modal("hide");
-    });
+    $("#deleteRabbitAction")
+      .off("click")
+      .on("click", function () {
+        const rabbitActionData = retrieveRabbitActionData();
+        console.log(rabbitActionData);
+        deleteRabbitAction(routeId, rabbitActionData);
+        $("#rabbitActionModal").modal("hide");
+      });
   });
 
   $("#routesTableBody").on("click", ".delete-button", function () {
