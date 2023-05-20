@@ -33,6 +33,7 @@ const renderRoutesTable = (routes, prefix) => {
 
   routes.forEach((route) => {
     const row = $("<tr></tr>");
+    //  <button class="btn btn-warning rabbit-button mx-2" data-route-id="${route.id}">Rabbit</button>
     row.html(`
       <td>${route.routeName}</td>
       <td>${route.httpMethod}</td>
@@ -40,8 +41,7 @@ const renderRoutesTable = (routes, prefix) => {
       <td>${route.responseType}</td>
       <td>${route.apiType}</td>
       <td>${route.delay}</td>
-      <td class="text-center" style="width: 290px;">
-        <button class="btn btn-warning rabbit-button mx-2" data-route-id="${route.id}">Rabbit</button>
+      <td class="text-center" style="width: auto;">
         <button class="btn btn-danger delete-button mx-2" data-route-id="${route.id}">Delete</button>
         <button class="btn btn-primary edit-button mx-2" data-route-id="${route.id}">Edit</button>
       </td>
