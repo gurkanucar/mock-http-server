@@ -1,61 +1,36 @@
-require("dotenv").config();
-
-const APP_PREFIX = process.env.APP_PREFIX;
-
 const express = require("express");
+
 const {
-  loadRoutes,
-  addRoute,
-  deleteRoute,
-  getById,
-  updateRoute,
-} = require("./routeDB");
-const { setupRoutes } = require("./routeGenerator");
+  deleteRouteById,
+  getPrefix,
+  loadRouteData,
+  createRoute,
+  getRouteDataById,
+  updateRouteData,
+} = require("./dynamicRoutesService");
 
 module.exports = (app) => {
   app.get("/prefix", express.json(), async (req, res) => {
-    res.json({ prefix: APP_PREFIX });
+    getPrefix(req, res, app);
   });
 
   app.get("/route", express.json(), async (req, res) => {
-    const routes = await loadRoutes();
-    res.json(routes);
+    loadRouteData(req, res, app);
   });
 
   app.post("/route", express.json(), async (req, res) => {
-    const newRoute = req.body;
-    await addRoute(newRoute);
-    await setupRoutes(app);
-    res.status(201).json({ message: "created" });
+    createRoute(req, res, app);
   });
 
   app.delete("/route/:id", express.json(), async (req, res) => {
-    const routeId = String(req.params.id);
-    await deleteRoute(routeId);
-    await setupRoutes(app);
-    res.sendStatus(200);
+    deleteRouteById(req, res, app);
   });
 
   app.get("/route/:id", express.json(), async (req, res) => {
-    const routeId = String(req.params.id);
-    try {
-      const result = await getById(routeId);
-
-      res.json(result);
-    } catch {
-      res.status(404).json({ message: "not found" });
-    }
+    getRouteDataById(req, res, app);
   });
 
   app.put("/route/:id", express.json(), async (req, res) => {
-    const routeId = String(req.params.id);
-    const updatedRoot = req.body;
-    try {
-      await updateRoute(routeId, updatedRoot);
-      await setupRoutes(app);
-      res.status(200).json({ message: "successfully update!" });
-    } catch {
-      res.status(404).json({ message: "not found" });
-    }
+    updateRouteData(req, res, app);
   });
 };
