@@ -147,6 +147,8 @@ $(document).ready(function () {
       const rabbitActionData = retrieveRabbitActionData();
       console.log(rabbitActionData);
       saveRabbitAction(routeId, rabbitActionData);
+      location.reload();
+
       $("#rabbitActionModal").modal("hide");
     });
 
@@ -154,6 +156,7 @@ $(document).ready(function () {
       const rabbitActionData = retrieveRabbitActionData();
       console.log(rabbitActionData);
       deleteRabbitAction(routeId, rabbitActionData);
+      location.reload();
       $("#rabbitActionModal").modal("hide");
     });
   });

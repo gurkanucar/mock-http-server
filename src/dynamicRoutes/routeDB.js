@@ -1,4 +1,6 @@
 const fs = require("fs");
+const fileLock = require("proper-lockfile");
+
 const { v4: uuidv4 } = require("uuid");
 const {
   HttpMethod,
@@ -20,14 +22,27 @@ const convertEnumsToObjects = (routes) => {
 
 const loadRoutes = async () => {
   try {
+    const lockfilePath = "data/routes.lock";
+
+    if (!fs.existsSync(lockfilePath)) {
+      fs.writeFileSync(lockfilePath, "");
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    await fileLock.lock(lockfilePath);
+
     if (!fs.existsSync("data/routes.json")) {
       fs.writeFileSync("data/routes.json", "[]");
       console.log("data/routes.json file created.");
     }
 
     const routesData = await fs.promises.readFile("data/routes.json", "utf8");
-    const parsedRoutes = JSON.parse(routesData);
-    routes = convertEnumsToObjects(parsedRoutes);
+    const tempRoutes = JSON.parse(routesData);
+    routes = convertEnumsToObjects(tempRoutes);
+
+    await fileLock.unlock(lockfilePath);
+
     return routes;
   } catch (err) {
     console.error("Error reading routes file:", err);
@@ -36,11 +51,11 @@ const loadRoutes = async () => {
 };
 
 const saveRoutes = async () => {
-  fs.writeFile("data/routes.json", JSON.stringify(routes), "utf8", (err) => {
-    if (err) {
-      console.error("Error saving routes file:", err);
-    }
-  });
+  await fs.promises.writeFile(
+    "data/routes.json",
+    JSON.stringify(routes),
+    "utf8"
+  );
 };
 
 const addRoute = async (newRoute) => {
@@ -68,23 +83,23 @@ const updateRoute = async (id, data) => {
     routes[index] = { ...data, id: id };
     await saveRoutes();
   } else {
-    throw new Error("not found!");
+    throw new Error("Route not found!");
   }
 };
 
 const getById = async (routeId) => {
-  const index = routes.find((route) => String(route.id) === routeId);
-  if (index !== undefined) {
-    return index;
+  const route = routes.find((route) => String(route.id) === routeId);
+  if (route) {
+    return route;
   }
-  throw new Error("not found!");
+  throw new Error("Route not found!");
 };
 
 module.exports = {
+  loadRoutes,
   addRoute,
-  saveRoutes,
   deleteRoute,
   updateRoute,
-  loadRoutes,
   getById,
+  routes,
 };

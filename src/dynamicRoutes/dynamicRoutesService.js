@@ -53,6 +53,18 @@ exports.getRouteDataById = async (req, res, app) => {
 exports.updateRouteData = async (req, res, app) => {
   const routeId = String(req.params.id);
   const updatedRoot = req.body;
+  const existingRoute = await getById(routeId);
+
+  const fieldsToKeep = [
+    "exchangeType",
+    "queueName",
+    "routingKey",
+    "message",
+    "headers",
+  ];
+
+  fieldsToKeep.forEach((field) => (updatedRoot[field] = existingRoute[field]));
+
   try {
     await updateRoute(routeId, updatedRoot);
     await setupRoutes(app);
@@ -96,7 +108,7 @@ exports.deleteRabbitAction = async (req, res, app) => {
 
     fieldsToRemove.forEach((field) => delete existingRoute[field]);
 
-    console.log("delete action", existingRoute);
+    //  console.log("delete action", existingRoute);
     await updateRoute(routeId, existingRoute);
     await setupRoutes(app);
     res.status(200).json({ message: "successfully update!" });
