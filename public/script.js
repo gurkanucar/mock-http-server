@@ -22,6 +22,34 @@ $(document).ready(function () {
   setSelectOptions(apiTypeSelect, apiTypeOptions);
 });
 
+const renderRoutesTable = (routes, prefix) => {
+  if (!Array.isArray(routes)) {
+    console.error("Invalid routes data.");
+    return;
+  }
+
+  const routesTableBody = $("#routesTableBody");
+  routesTableBody.empty();
+
+  routes.forEach((route) => {
+    const row = $("<tr></tr>");
+    row.html(`
+      <td>${route.routeName}</td>
+      <td>${route.httpMethod}</td>
+      <td><strong>${prefix}</strong>${route.routePath}</td>
+      <td>${route.responseType}</td>
+      <td>${route.apiType}</td>
+      <td>${route.delay}</td>
+      <td class="text-center" style="width: 290px;">
+        <button class="btn btn-warning rabbit-button mx-2" data-route-id="${route.id}">Rabbit</button>
+        <button class="btn btn-danger delete-button mx-2" data-route-id="${route.id}">Delete</button>
+        <button class="btn btn-primary edit-button mx-2" data-route-id="${route.id}">Edit</button>
+      </td>
+    `);
+    routesTableBody.append(row);
+  });
+};
+
 $(document).ready(function () {
   const addRouteForm = $("#addRouteForm");
 
@@ -71,85 +99,6 @@ $(document).ready(function () {
       successStatus,
       errorStatus,
     };
-  };
-
-  const addRoute = (newRoute) => {
-    $.ajax({
-      url: "/route",
-      type: "POST",
-      contentType: "application/json",
-      data: JSON.stringify(newRoute),
-      success: () => {},
-      error: () => {
-        console.error("Error adding route.");
-      },
-    });
-  };
-
-  const updateRoute = (routeId, updatedRoute) => {
-    $.ajax({
-      url: `/route/${routeId}`,
-      type: "PUT",
-      contentType: "application/json",
-      data: JSON.stringify(updatedRoute),
-      success: () => {
-        console.log("Route updated successfully.");
-      },
-      error: (e) => {
-        console.error("Error updating route.", e);
-      },
-    });
-  };
-
-  const fetchRoutes = () => {
-    $.ajax({
-      url: "/prefix",
-      type: "GET",
-      success: (prefixResponse) => {
-        const prefix = prefixResponse.prefix;
-        $.ajax({
-          url: "/route",
-          type: "GET",
-          success: (routes) => {
-            renderRoutesTable(routes, prefix);
-          },
-          error: () => {
-            console.error("Error fetching routes.");
-          },
-        });
-      },
-      error: () => {
-        console.error("Error fetching prefix.");
-      },
-    });
-  };
-
-  const renderRoutesTable = (routes, prefix) => {
-    if (!Array.isArray(routes)) {
-      console.error("Invalid routes data.");
-      return;
-    }
-
-    const routesTableBody = $("#routesTableBody");
-    routesTableBody.empty();
-
-    routes.forEach((route) => {
-      const row = $("<tr></tr>");
-      row.html(`
-        <td>${route.routeName}</td>
-        <td>${route.httpMethod}</td>
-        <td><strong>${prefix}</strong>${route.routePath}</td>
-        <td>${route.responseType}</td>
-        <td>${route.apiType}</td>
-        <td>${route.delay}</td>
-        <td class="text-center" style="width: 290px;">
-          <button class="btn btn-warning rabbit-button mx-2" data-route-id="${route.id}">Rabbit</button>
-          <button class="btn btn-danger delete-button mx-2" data-route-id="${route.id}">Delete</button>
-          <button class="btn btn-primary edit-button mx-2" data-route-id="${route.id}">Edit</button>
-        </td>
-      `);
-      routesTableBody.append(row);
-    });
   };
 
   const retrieveRabbitActionData = () => {
@@ -206,36 +155,6 @@ $(document).ready(function () {
       $("#updateRouteBtn").show();
     }
   });
-
-  const deleteRoute = (routeId) => {
-    $.ajax({
-      url: `/route/${routeId}`,
-      type: "DELETE",
-      success: () => {
-        console.log("Route deleted successfully.");
-        fetchRoutes();
-      },
-      error: (e) => {
-        console.error("Error deleting route.", e);
-      },
-    });
-  };
-
-  const getRouteById = (routeId) => {
-    let route;
-    $.ajax({
-      url: `/route/${routeId}`,
-      type: "GET",
-      async: false,
-      success: (response) => {
-        route = response;
-      },
-      error: (e) => {
-        console.error("Error getting route by ID.", e);
-      },
-    });
-    return route;
-  };
 
   const updateFormData = (route) => {
     $("#routeName").val(route.routeName);
