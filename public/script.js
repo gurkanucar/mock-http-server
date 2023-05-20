@@ -142,7 +142,8 @@ $(document).ready(function () {
         <td>${route.responseType}</td>
         <td>${route.apiType}</td>
         <td>${route.delay}</td>
-        <td class="text-center" style="width: 220px;">
+        <td class="text-center" style="width: 290px;">
+          <button class="btn btn-warning rabbit-button mx-2" data-route-id="${route.id}">Rabbit</button>
           <button class="btn btn-danger delete-button mx-2" data-route-id="${route.id}">Delete</button>
           <button class="btn btn-primary edit-button mx-2" data-route-id="${route.id}">Edit</button>
         </td>
@@ -151,6 +152,19 @@ $(document).ready(function () {
     });
   };
 
+  $("#routesTableBody").on("click", ".rabbit-button", function () {
+    const routeId = $(this).data("route-id");
+    const route = getRouteById(routeId);
+  
+    $("#rabbitActionModalTitle").text(`[${route.httpMethod}] ${route.routePath}`);
+  
+    $("#successStatusInput").val("200");
+    $("#errorStatusInput").val("400");
+    $("#rabbitActionModal").modal("show");
+  });
+
+  
+  
   $("#routesTableBody").on("click", ".delete-button", function () {
     const routeId = $(this).data("route-id");
     deleteRoute(routeId);
@@ -212,3 +226,9 @@ $(document).ready(function () {
 
   fetchRoutes();
 });
+
+// $(document).ready(function () {
+//   setTimeout(function () {
+//     $("#rabbitActionModal").modal("show");
+//   }, 500);
+// });
