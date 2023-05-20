@@ -152,19 +152,47 @@ $(document).ready(function () {
     });
   };
 
+  const retrieveRabbitActionData = () => {
+    const exchangeType = $("#exchangeType").val();
+    const queueName = $("#queueName").val();
+    const routingKey = $("#routingKey").val();
+    const message = $("#message").val();
+    const headers = $("#headers").val();
+
+    return { exchangeType, queueName, routingKey, message, headers };
+  };
+
+  const setRabbitActionData = (data) => {
+    $("#exchangeType").val(data.exchangeType);
+    $("#queueName").val(data.queueName);
+    $("#routingKey").val(data.routingKey);
+    $("#message").val(data.message);
+    $("#headers").val(data.headers);
+  };
+
   $("#routesTableBody").on("click", ".rabbit-button", function () {
     const routeId = $(this).data("route-id");
     const route = getRouteById(routeId);
-  
-    $("#rabbitActionModalTitle").text(`[${route.httpMethod}] ${route.routePath}`);
-  
-    $("#successStatusInput").val("200");
-    $("#errorStatusInput").val("400");
+
+    $("#rabbitActionModalTitle").text(
+      `[${route.httpMethod}] ${route.routePath}`
+    );
+
     $("#rabbitActionModal").modal("show");
+
+    $("#saveRabbitAction").on("click", function () {
+      const rabbitActionData = retrieveRabbitActionData();
+      console.log(rabbitActionData);
+      saveRabbitAction(rabbitActionData);
+    });
+
+    $("#deleteRabbitAction").on("click", function () {
+      const rabbitActionData = retrieveRabbitActionData();
+      console.log(rabbitActionData);
+      deleteRabbitAction(rabbitActionData);
+    });
   });
 
-  
-  
   $("#routesTableBody").on("click", ".delete-button", function () {
     const routeId = $(this).data("route-id");
     deleteRoute(routeId);
