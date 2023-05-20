@@ -7,7 +7,7 @@ const setSelectOptions = (selectElement, options) => {
   });
 };
 
-$(document).ready(function () {
+$(document).ready(() => {
   const httpMethodSelect = $("#httpMethod");
   const responseTypeSelect = $("#responseType");
   const apiTypeSelect = $("#apiType");
@@ -31,9 +31,22 @@ const renderRoutesTable = (routes, prefix) => {
   const routesTableBody = $("#routesTableBody");
   routesTableBody.empty();
 
+  let isRabbitActionSupport = rabbitActionSupport();
+
   routes.forEach((route) => {
     const row = $("<tr></tr>");
-    //  <button class="btn btn-warning rabbit-button mx-2" data-route-id="${route.id}">Rabbit</button>
+
+    let buttons = `
+    <button class="btn btn-danger delete-button mx-1" data-route-id="${route.id}">Delete</button>
+    <button class="btn btn-primary edit-button mx-1" data-route-id="${route.id}">Edit</button>
+`;
+
+    if (isRabbitActionSupport) {
+      buttons =
+        ` <button class="btn btn-warning rabbit-button mx-1" data-route-id="${route.id}">Rabbit</button> ` +
+        buttons;
+    }
+
     row.html(`
       <td>${route.routeName}</td>
       <td>${route.httpMethod}</td>
@@ -42,8 +55,7 @@ const renderRoutesTable = (routes, prefix) => {
       <td>${route.apiType}</td>
       <td>${route.delay}</td>
       <td class="text-center" style="width: auto;">
-        <button class="btn btn-danger delete-button mx-2" data-route-id="${route.id}">Delete</button>
-        <button class="btn btn-primary edit-button mx-2" data-route-id="${route.id}">Edit</button>
+        ${buttons}
       </td>
     `);
     routesTableBody.append(row);
@@ -112,11 +124,11 @@ $(document).ready(function () {
   };
 
   const setRabbitActionData = (data) => {
-    $("#exchangeType").val(data.exchangeType);
-    $("#queueName").val(data.queueName);
-    $("#routingKey").val(data.routingKey);
-    $("#message").val(data.message);
-    $("#headers").val(data.headers);
+    $("#exchangeType").val(data.exchangeType || "");
+    $("#queueName").val(data.queueName || "");
+    $("#routingKey").val(data.routingKey || "");
+    $("#message").val(data.message || "");
+    $("#headers").val(data.headers || "");
   };
 
   $("#routesTableBody").on("click", ".rabbit-button", function () {
@@ -127,18 +139,22 @@ $(document).ready(function () {
       `[${route.httpMethod}] ${route.routePath}`
     );
 
+    setRabbitActionData(route);
+
     $("#rabbitActionModal").modal("show");
 
     $("#saveRabbitAction").on("click", function () {
       const rabbitActionData = retrieveRabbitActionData();
       console.log(rabbitActionData);
-      saveRabbitAction(rabbitActionData);
+      saveRabbitAction(routeId, rabbitActionData);
+      $("#rabbitActionModal").modal("hide");
     });
 
     $("#deleteRabbitAction").on("click", function () {
       const rabbitActionData = retrieveRabbitActionData();
       console.log(rabbitActionData);
-      deleteRabbitAction(rabbitActionData);
+      deleteRabbitAction(routeId, rabbitActionData);
+      $("#rabbitActionModal").modal("hide");
     });
   });
 
