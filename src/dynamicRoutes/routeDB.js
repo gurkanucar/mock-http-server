@@ -7,6 +7,7 @@ const {
   ResponseType,
   ApiType,
 } = require("../helper/responseHelper");
+
 let routes = [];
 
 const convertEnumsToObjects = (routes) => {
@@ -46,7 +47,7 @@ const loadRoutes = async () => {
         break;
       } catch (err) {
         retryCount++;
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 200));
       }
     }
 
@@ -73,7 +74,21 @@ const saveRoutes = async () => {
   );
 };
 
+const isDuplicateRoute = (newRoute) => {
+  return routes.some(
+    (route) =>
+      route.routePath == newRoute.routePath &&
+      route.httpMethod == newRoute.httpMethod
+  );
+};
+
 const addRoute = async (newRoute) => {
+  if (isDuplicateRoute(newRoute)) {
+    throw new Error(
+      "Route with the same routePath and httpMethod already exists."
+    );
+  }
+
   const newId = uuidv4();
   newRoute = {
     ...newRoute,
@@ -91,11 +106,28 @@ const deleteRoute = async (routeId) => {
     await saveRoutes();
   }
 };
-
 const updateRoute = async (id, data) => {
-  const index = routes.findIndex((route) => String(route.id) === id);
-  if (index !== -1) {
-    routes[index] = { ...data, id: id };
+  const existingRouteIndex = routes.findIndex(
+    (route) => String(route.id) === id
+  );
+  if (existingRouteIndex !== -1) {
+    const existingRoute = routes[existingRouteIndex];
+    const updatedRoute = { ...existingRoute, ...data };
+
+    const duplicateIndex = routes.findIndex(
+      (route, index) =>
+        route.id != existingRoute.id &&
+        route.routePath == updatedRoute.routePath &&
+        route.httpMethod == updatedRoute.httpMethod
+    );
+
+    if (duplicateIndex !== -1) {
+      throw new Error(
+        "Route with the same routePath and httpMethod already exists."
+      );
+    }
+
+    routes[existingRouteIndex] = updatedRoute;
     await saveRoutes();
   } else {
     throw new Error("Route not found!");

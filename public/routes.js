@@ -44,7 +44,8 @@ const addRoute = (newRoute) => {
     contentType: "application/json",
     data: JSON.stringify(newRoute),
     success: () => {},
-    error: () => {
+    error: (e) => {
+      alert(JSON.stringify(e));
       console.error("Error adding route.");
     },
   });
@@ -60,6 +61,7 @@ const updateRoute = (routeId, updatedRoute) => {
       console.log("Route updated successfully.");
     },
     error: (e) => {
+      alert(JSON.stringify(e));
       console.error("Error updating route.", e);
     },
   });
