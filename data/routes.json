@@ -20,7 +20,7 @@
     "apiType": "SOAP",
     "delay": "0",
     "successResponse": "      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>",
-    "errorResponse": "      \n<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>",
+    "errorResponse": "<env:Envelope  xmlns:env=\"http://www.w3.org/2001/12/soap-envelope\" >\n    <env:Body>\n        <env:Fault>\n          <env:Code>\n            <env:Value>env:Sender</env:Value>\n          </env:Code>\n\n          <env:Reason>\n            <env:Text xml:lang=\"en-US\">Processing error</env:Text>\n            <env:Text xml:lang=\"da\">Processerings-fejl</env:Text>\n          </env:Reason>\n        </env:Fault>\n    </env:Body>\n</env:Envelope>",
     "successStatus": "200",
     "errorStatus": "400",
     "id": "5ca4f2e5-b3ab-4459-a03e-01697e939e42"
