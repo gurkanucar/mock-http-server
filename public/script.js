@@ -67,6 +67,7 @@ $(document).ready(function () {
 
   $("#clearBtn").on("click", function () {
     addRouteForm.trigger("reset");
+    addRouteForm.removeData("route-id");
   });
 
   addRouteForm.on("submit", function (event) {
@@ -80,9 +81,11 @@ $(document).ready(function () {
       $("#addRouteBtn").show();
       $("#updateRouteBtn").hide();
       addRouteForm.trigger("reset");
+      addRouteForm.removeData("route-id");
     } else {
       addRoute(newRoute);
       addRouteForm.trigger("reset");
+      addRouteForm.removeData("route-id");
     }
 
     fetchRoutes();
