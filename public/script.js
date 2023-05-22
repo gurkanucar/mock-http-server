@@ -79,12 +79,13 @@ $(document).ready(function () {
       addRouteForm.removeData("route-id");
       $("#addRouteBtn").show();
       $("#updateRouteBtn").hide();
+      addRouteForm.trigger("reset");
     } else {
       addRoute(newRoute);
+      addRouteForm.trigger("reset");
     }
 
     fetchRoutes();
-    addRouteForm.trigger("reset");
   });
 
   const getFormData = () => {
